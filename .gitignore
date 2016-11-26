@@ -1,0 +1,7 @@
+MNIST*
+env
+.vscode
+__pycache__
+env
+sqwaks
+**/*.DS_Store
