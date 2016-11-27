@@ -46,7 +46,7 @@ def get_buffered_amplitudes(path):
 
 def main():
     amps = get_buffered_amplitudes("./sqwaks/dool_shmaw/*.wav")
-    print("\n" + str(len(amps[20])))
+    print("\n" + str(len(amps)))
 
 
 if (__name__ == "__main__"):
