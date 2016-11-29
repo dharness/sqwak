@@ -1,0 +1,15 @@
+version: '2'
+services:  
+  node:
+    build: ./web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./web/app:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm start
+
+  mongo:
+    image: mongo:3
+    ports:
+      - "27017:27017"
