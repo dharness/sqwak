@@ -1,8 +1,0 @@
-node:
-  build: .
-  ports:
-    - "8080:8080"
-  volumes:
-    - ./app:/usr/src/app
-    - /usr/src/app/node_modules
-  command: npm start
