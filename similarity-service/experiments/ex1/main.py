@@ -3,10 +3,12 @@ from DataSets import DataSets
 from pymongo import MongoClient
 from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
+import time
 from process_audio import get_buffered_amplitudes
 
 
 def main():
+    
     client = MongoClient()
     db = client.sqwaks
 
@@ -33,4 +35,7 @@ def main():
     # print(mnist_accuracy)
 
 if (__name__ == "__main__"):
+    start = time.time()
     main()
+    end = time.time()
+    print('time elapsed (s): ', end-start)
