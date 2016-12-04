@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var sounds = require('./routes/sounds');
 var originalSqwak = require('./routes/originalSqwak');
+var labsController = require('./routes/labs');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/sounds', sounds);
 app.use('/original-sqwak', originalSqwak);
+app.use('/labs', labsController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,12 @@
+extends ./../layout
+
+
+block content
+    img.sqwak-labs-logo(src='./../images/sqwak-labs-mobile.svg')
+    link(rel='stylesheet', href='./../stylesheets/labs.css')
+    script(src='./../scripts/recorder.js')
+    .sqwak-labs-round-button(onclick='toggleRecording(this);')
+      img.record-dot(src='./../images/record-dot.svg')
+    script(src='./../scripts/recorder.js')
+    script(src='./../scripts/main.js')
+
