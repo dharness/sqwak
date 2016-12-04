@@ -1,5 +1,6 @@
 version: '2'
-services:  
+services:
+
   node:
     build: ./web
     ports:
@@ -8,6 +9,15 @@ services:
       - mongo:db
     volumes:
       - ./web/app:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm start
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8082:3000"
+    volumes:
+      - ./frontend/app:/usr/src/app
       - /usr/src/app/node_modules
     command: npm start
 
