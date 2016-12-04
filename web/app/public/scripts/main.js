@@ -9,54 +9,26 @@ var rafID = null;
 var analyserContext = null;
 var canvasWidth, canvasHeight;
 var recIndex = 0;
+var sampleLength = 3.0;
 
 
 function gotBuffers( buffers ) {
-    // the ONLY time gotBuffers is called is right after a new recording is completed - 
-    // so here's where we should set up the download.
     var amplitudes =  Array.prototype.slice.call(buffers[0]);
     uploadAmplitudes(amplitudes);
     document.querySelector('#attempt-count').innerHTML = ++recIndex; 
-    // audioRecorder.exportWAV( doneEncoding );
 }
 
 function uploadAmplitudes(amplitudes) {
-    var data = {
-        data: { 
-            amplitudes,
-            label: "TEST_DATA"
-        }
-    };
+    var payload = { data: {  amplitudes, label: "TEST_DATA" } };
     fetch('/sounds', {
         method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
     })
-    .then(response => {
-        console.log(response);
-        response.json()
-    })
-    .then(result =>  console.log(result) )
-    .catch(error => console.log('Request failed', error));
-}
-
-function doneEncoding( blob ) {
-    Recorder.setupDownload( blob, "myRecording" + ((recIndex<10)?"0":"") + recIndex + ".wav" );
-    recIndex++;
-}
-
-function toggleRecording( e ) {
-    if (e.classList.contains("recording")) {
-        stopRecording(e);
-    } else {
-        startRecording(e);
-    }
+    .catch(error => console.error('Request failed', error));
 }
 
 function startRecording( e ) {
-    // start recording
     if (!audioRecorder)
         return;
     if (!e.classList.contains("recording")) {
@@ -65,12 +37,11 @@ function startRecording( e ) {
         audioRecorder.record();
         window.setTimeout(() => {
             stopRecording(e);
-        }, 5000)
+        }, sampleLength * 1000)
     }
 }
 
 function stopRecording( e ) {
-    // stop recording
     audioRecorder.stop();
     e.classList.remove("recording");
     audioRecorder.getBuffers( gotBuffers );
@@ -78,8 +49,6 @@ function stopRecording( e ) {
 
 function gotStream(stream) {
     inputPoint = audioContext.createGain();
-
-    // Create an AudioNode from the stream.
     realAudioInput = audioContext.createMediaStreamSource(stream);
     audioInput = realAudioInput;
     audioInput.connect(inputPoint);
@@ -92,12 +61,12 @@ function gotStream(stream) {
 }
 
 function initAudio() {
-        if (!navigator.getUserMedia)
-            navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        if (!navigator.cancelAnimationFrame)
-            navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
-        if (!navigator.requestAnimationFrame)
-            navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
+    if (!navigator.getUserMedia)
+        navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    if (!navigator.cancelAnimationFrame)
+        navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
+    if (!navigator.requestAnimationFrame)
+        navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
 
     navigator.getUserMedia(
         {
