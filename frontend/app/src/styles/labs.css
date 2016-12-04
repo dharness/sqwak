@@ -12,7 +12,7 @@ html, body {
   margin: 30px auto 0px auto;
 }
 
-.sqwak-labs-play-button {
+.sqwak-labs-round-button {
   height: 60%;
   width: 60%;
   display: flex;
@@ -39,21 +39,21 @@ html, body {
 }
 
 .sqwak-labs-square-button {
-  background: red;
-  width: 800px;
-  height: 200px;
+  width: 80%;
   margin: auto;
   border-radius: 10px;
-  border: 3px solid #3F4F67;
+  border: 2px solid #3F4F67;
   background: #42CDF9;
   position: fixed;
-  bottom: 100px;
-  left: calc(50% - (800px/2));
+  bottom: 20px;
+  left: calc(50% - (80%/2));
   color: white;
   font-family: Bungee-Regular;
-  font-size: 150px;
+  font-size: 45px;
   text-align: center;
   transition: transform 5ms linear;
+  display: block;
+  padding: 10px 0px 10px 0px;
 }
 
 .sqwak-labs-square-button:active {

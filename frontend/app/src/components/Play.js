@@ -4,6 +4,7 @@ import playButtonImg from './../assets/images/play-button.svg';
 import pauseButtonImg from './../assets/images/pause-button.svg';
 import originalShmaw  from './../assets/audio/original-shmaw.wav';
 import './../styles/App.css';
+import { browserHistory } from 'react-router'
 
 class Play extends Component {
 
@@ -39,6 +40,11 @@ class Play extends Component {
     this.setState({playButtonImage: pauseButtonImg});
   }
 
+  startRecording() {
+    const path = `/record`
+    browserHistory.push(path)
+  }
+
   render() {
     return (
         <div>
@@ -46,8 +52,8 @@ class Play extends Component {
             <source src={originalShmaw}/>
           </audio>
           <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
-          <img src={this.state.playButtonImage} className="sqwak-labs-play-button" role="presentation" onClick={this.toggleSoundPlaying.bind(this)}/>
-          {/* <div onclick="window.location = '/labs/record'" className="sqwak-labs-square-button">Try it</div> */}
+          <img src={this.state.playButtonImage} className="sqwak-labs-round-button" role="presentation" onClick={this.toggleSoundPlaying.bind(this)}/>
+          <div onClick={this.startRecording.bind(this)} className="sqwak-labs-square-button">Try it</div>
         </div>
     );
   }
