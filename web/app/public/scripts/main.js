@@ -1,18 +1,3 @@
-/* Copyright 2013 Chris Wilson
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 var audioContext = new AudioContext();
@@ -29,9 +14,32 @@ var recIndex = 0;
 function gotBuffers( buffers ) {
     // the ONLY time gotBuffers is called is right after a new recording is completed - 
     // so here's where we should set up the download.
-    console.log(buffers[0].length)
-    console.log(++recIndex);
+    var amplitudes =  Array.prototype.slice.call(buffers[0]);
+    uploadAmplitudes(amplitudes);
+    document.querySelector('#attempt-count').innerHTML = ++recIndex; 
     // audioRecorder.exportWAV( doneEncoding );
+}
+
+function uploadAmplitudes(amplitudes) {
+    var data = {
+        data: { 
+            amplitudes,
+            label: "TEST_DATA"
+        }
+    };
+    fetch('/sounds', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        console.log(response);
+        response.json()
+    })
+    .then(result =>  console.log(result) )
+    .catch(error => console.log('Request failed', error));
 }
 
 function doneEncoding( blob ) {
@@ -41,18 +49,31 @@ function doneEncoding( blob ) {
 
 function toggleRecording( e ) {
     if (e.classList.contains("recording")) {
-        // stop recording
-        audioRecorder.stop();
-        e.classList.remove("recording");
-        audioRecorder.getBuffers( gotBuffers );
+        stopRecording(e);
     } else {
-        // start recording
-        if (!audioRecorder)
-            return;
+        startRecording(e);
+    }
+}
+
+function startRecording( e ) {
+    // start recording
+    if (!audioRecorder)
+        return;
+    if (!e.classList.contains("recording")) {
         e.classList.add("recording");
         audioRecorder.clear();
         audioRecorder.record();
+        window.setTimeout(() => {
+            stopRecording(e);
+        }, 5000)
     }
+}
+
+function stopRecording( e ) {
+    // stop recording
+    audioRecorder.stop();
+    e.classList.remove("recording");
+    audioRecorder.getBuffers( gotBuffers );
 }
 
 function gotStream(stream) {

@@ -16,8 +16,9 @@ router.post('/', function(req, res, next) {
   const data = req.body ? req.body.data : {}
 
   Joi.validate(data, soundSchema, (err, sound) => {
+    console.log(err);
     if (err != null) return res.status(400).send(err);
-
+    
     conn.db.collection('sounds').insertOne(sound, (err, ok) => {
       if (err != null) return res.send(err);
       res.status(200).send(ok);
