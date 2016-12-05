@@ -9,9 +9,22 @@ services:
     volumes:
       - ./web/app:/usr/src/app
       - /usr/src/app/node_modules
+    environment:
+      - HOST_IP=138.197.134.40
     command: npm start
+
 
   mongo:
     image: mongo:3
     ports:
       - "27017:27017"
+  
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    links:
+      - node:api
+    ports:
+      - "80:80"
+      - "443:443"
