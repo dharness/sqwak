@@ -16,31 +16,38 @@ class Record extends Component {
     }
   }
 
-  tick() {
-    this.setState({timeRemaining: this.state.timeRemaining - 100 });
-  }
-
   startCountdown() {
-    this.countDownIntervalId = setInterval(() => this.tick(), 100 );
+    this.countDownIntervalId = setInterval(() => {
+      if (this.state.timeRemaining <= 0) {
+        this.stopRecording();
+      } else {
+        this.setState({timeRemaining: this.state.timeRemaining - 100 });
+      }
+    }, 100 );
   }
 
   startRecording() {
     if (!this.state.isRecording) {
       this.startCountdown();
-      recordingService.recordFor(this.sampleLength * 1000).then((buffers) => {
-        clearInterval(this.countDownIntervalId);
-        console.log(buffers);
-        this.setState({ isRecording: false, timeRemaining: this.sampleLength * 1000 });
-      });
+      recordingService.startRecording();
       this.setState({ isRecording: true });
     }
   }
 
+  stopRecording() {
+    this.setState({ isRecording: false, timeRemaining: this.sampleLength * 1000 });
+    clearInterval(this.countDownIntervalId);
+  }
+
   getTime() {
-    const timeString = this.state.timeRemaining.toString();
-    const seconds = (this.state.timeRemaining >= 1000) ? timeString[0] : '0';
-    const milliseconds = timeString[1] + timeString[2]
-    return { seconds, milliseconds }
+    let timeString = this.state.timeRemaining.toString();
+    const padLength = (4 - timeString.length) || 0;
+    const padding = new Array(padLength).fill("0").join("");
+    timeString = padding + timeString;
+    return {
+      seconds: timeString[0], 
+      milliseconds: timeString[1] + timeString[2]
+    }
   }
 
   componentDidMount() {

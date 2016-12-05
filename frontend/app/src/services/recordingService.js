@@ -16,6 +16,20 @@ var recordingService = {
     });
   },
 
+  startRecording() {
+    this.audioRecorder.clear();
+    this.audioRecorder.record();
+  },
+
+  stopRecording() {
+    return new Promise((resolve, reject) => {
+      this.audioRecorder.stop();
+      this.audioRecorder.getBuffers(buffers => {
+        resolve(buffers);  
+      });
+    });
+  },
+
   _gotStream(stream) {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioContext = new AudioContext();
