@@ -64,3 +64,13 @@ html, body {
 #attempt-count {
   font-size: 150px;
 }
+
+.sqwak-labs-recording-timer {
+  width: 100%;
+  position: fixed;
+  bottom: 20px;
+  text-align: center;
+  font-size: 64px;
+  color: #42CDF8;
+  font-family: Bungee-Regular;
+}
