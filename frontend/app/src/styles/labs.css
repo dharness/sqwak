@@ -74,3 +74,60 @@ html, body {
   color: #42CDF8;
   font-family: Bungee-Regular;
 }
+
+.sqwak-labs-intake-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sqwak-labs-intake-form-row {
+  height: 80px;
+  width: 80%;
+  margin: auto;
+  color: #3F4F66;
+}
+
+.sqwak-labs-intake-userid {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: center;
+  width: 100%;
+  border-bottom: 1px solid black;
+  border-color: #3F4F66;
+  padding-bottom: 5px;
+  margin: auto;
+}
+
+.sqwak-labs-intake-radio {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.sqwak-labs-radio-button-group {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sqwak-labs-radio-button {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  align-self: center;
+  line-height: 30px;
+}
+
+.sqwak-labs-radio-button.active {
+  background: #DCF0FD;
+}
+
+.sqwak-intake-label-dropdown {
+  margin-top: 20px;
+}
