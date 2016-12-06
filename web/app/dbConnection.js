@@ -12,7 +12,7 @@ class DbConnection extends EventEmitter {
             this.emit('dbConnected');        
         });
     }
-
+    
     get db () {
         return this._db;
     }
