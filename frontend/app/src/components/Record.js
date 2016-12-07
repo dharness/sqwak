@@ -3,6 +3,7 @@ import sqwakLabsLogo from './../assets/images/sqwak-labs-mobile.svg';
 import recordButtonImg  from './../assets/images/record-button-normal.svg';
 import recordButtonActiveImg from './../assets/images/record-button-active.svg';
 import recordingService from './../services/recordingService.js';
+import { Link } from 'react-router'
 
 class Record extends Component {
   
@@ -57,7 +58,9 @@ class Record extends Component {
   render() {
     return (
       <div>
-        <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
+        <Link to={'/'}>
+          <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
+        </Link>
         <img src={this.state.isRecording ? recordButtonActiveImg : recordButtonImg} className="sqwak-labs-round-button" role="presentation" onClick={this.startRecording.bind(this)}/>
         <div className="sqwak-labs-recording-timer">
           {this.getTime().seconds}:{this.getTime().milliseconds}

@@ -1,7 +1,5 @@
 version: '2'
 services:
-
-
   node:
     build: ./web
     ports:
@@ -21,6 +19,8 @@ services:
       - ./frontend/app:/usr/src/app
       - /usr/src/app/node_modules
     command: npm start
+    links:
+      - node:api 
 
   mongo:
     image: mongo:3
