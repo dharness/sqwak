@@ -22,10 +22,18 @@ class Record extends Component {
     this.countDownIntervalId = setInterval(() => {
       if (this.state.timeRemaining <= 0) {
         this.stopRecording();
+        recordingService.stopRecording().then((buffers) => this.addAttempt(buffers[0]))
       } else {
         this.setState({timeRemaining: this.state.timeRemaining - 100 });
       }
     }, 100 );
+  }
+
+  addAttempt(amplitudes) {
+    this.props.dispatch({
+      type: 'ADD_ATTEMPT',
+      attempt: amplitudes
+    });
   }
 
   startRecording() {
