@@ -131,3 +131,13 @@ html, body {
 .sqwak-intake-label-dropdown {
   margin-top: 20px;
 }
+
+.sqwak-labs-countdown {
+  color: #D4F0FD;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-align: center;
+  margin-top: 35px;
+  font-family: Bungee-Regular;
+  font-size: 36px;
+}

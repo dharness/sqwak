@@ -13,7 +13,11 @@ const logger = createLogger();
 
 const initialState = {
   testSubject: {
-    subjectId: (''+Math.random()).split('.')[1] 
+    subjectId: (''+Math.random()).split('.')[1],
+    numberOfAttempts: 10,
+    gender: 'M',
+    label: 'shmiggity-shmaw',
+    attempts: []
   }
 };
 

@@ -50,7 +50,7 @@ class Intake extends Component {
           </div>
           <div className="sqwak-labs-intake-form-row">
             <div className="sqwak-intake-label-dropdown">
-              <Dropdown options={['shmiggity-shmaw']} onChange={this.onLabelSelected.bind(this)} value={'shmiggity-shmaw'} placeholder="Label" />
+              <Dropdown options={['shmiggity-shmaw']} onChange={this.onLabelSelected.bind(this)} value={this.props.label} placeholder="Label" />
             </div>
           </div>
           <div className="sqwak-labs-intake-form-row">
@@ -68,7 +68,10 @@ class Intake extends Component {
 
 function mapStateToProps(state) {
   return {
-    subjectId: state.testSubject.subjectId
+    subjectId: state.testSubject.subjectId,
+    gender: state.testSubject.gender,
+    label: state.testSubject.label,
+    numberOfAttempts: state.testSubject.numberOfAttempts
   }
 }
 

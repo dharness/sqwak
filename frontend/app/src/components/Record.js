@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import sqwakLabsLogo from './../assets/images/sqwak-labs-mobile.svg';
 import recordButtonImg  from './../assets/images/record-button-normal.svg';
 import recordButtonActiveImg from './../assets/images/record-button-active.svg';
@@ -61,6 +62,7 @@ class Record extends Component {
         <Link to={'/'}>
           <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
         </Link>
+        <div className="sqwak-labs-countdown"> {this.props.attempts.length} / {this.props.numberOfAttempts} </div>
         <img src={this.state.isRecording ? recordButtonActiveImg : recordButtonImg} className="sqwak-labs-round-button" role="presentation" onClick={this.startRecording.bind(this)}/>
         <div className="sqwak-labs-recording-timer">
           {this.getTime().seconds}:{this.getTime().milliseconds}
@@ -70,4 +72,11 @@ class Record extends Component {
   }
 }
 
-export default Record;
+function mapStateToProps(state) {
+  return {
+    numberOfAttempts: state.testSubject.numberOfAttempts,
+    attempts: state.testSubject.attempts
+  }
+}
+
+export default connect(mapStateToProps)(Record);
