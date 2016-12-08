@@ -1,5 +1,5 @@
 version: '2'
-services:  
+services:
   node:
     build: ./web
     ports:
@@ -13,6 +13,18 @@ services:
       - HOST_IP=138.197.134.40
     command: npm start
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "8082:3000"
+    volumes:
+      - ./frontend/app:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm start
+    links:
+      - node:api 
+    environment:
+      - REACT_APP_API_URL=localhost:8080
 
   mongo:
     image: mongo:3
