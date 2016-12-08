@@ -5,6 +5,7 @@ import recordButtonImg  from './../assets/images/record-button-normal.svg';
 import recordButtonActiveImg from './../assets/images/record-button-active.svg';
 import recordingService from './../services/recordingService.js';
 import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 
 class Record extends Component {
   
@@ -14,7 +15,9 @@ class Record extends Component {
     this.state = {
       recordButtonImage: recordButtonImg,
       isRecording: false,
-      timeRemaining: this.sampleLength * 1000
+      timeRemaining: this.sampleLength * 1000,
+      isSession: true,
+      sessionBuffers: []
     }
   }
 
@@ -22,7 +25,9 @@ class Record extends Component {
     this.countDownIntervalId = setInterval(() => {
       if (this.state.timeRemaining <= 0) {
         this.stopRecording();
-        recordingService.stopRecording().then((buffers) => this.addAttempt(buffers[0]))
+        recordingService.stopRecording().then((buffers) => {
+          this.setState({sessionBuffers: buffers});
+        })
       } else {
         this.setState({timeRemaining: this.state.timeRemaining - 100 });
       }
@@ -30,14 +35,43 @@ class Record extends Component {
   }
 
   addAttempt(amplitudes) {
-    this.props.dispatch({
-      type: 'ADD_ATTEMPT',
-      attempt: amplitudes
-    });
+    this.uploadAmplitudes(amplitudes)
+        .then((response) => {
+          if (response.status === 200) {
+            this.props.dispatch({
+              type: 'ADD_ATTEMPT',
+              attempt: amplitudes
+            });
+          } else {
+            alert("An error has occurred");
+            console.warn(response);
+          }
+        });
   }
 
+   uploadAmplitudes(amplitudes) {
+     amplitudes = Array.prototype.slice.call(amplitudes);
+     var payload = {
+       data: {
+         amplitudes,
+         label: this.props.label,
+         gender: this.props.gender
+       }
+     };
+
+     console.log(payload);
+
+     return fetch(`http://${process.env.REACT_APP_API_URL}/sounds`, {
+       method: 'post',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify(payload)
+     })
+    .catch(error => console.error('Request failed', error));
+  }
+
+
   startRecording() {
-    if (!this.state.isRecording) {
+    if (!this.state.isRecording && this.state.isSession) {
       this.startCountdown();
       recordingService.startRecording();
       this.setState({ isRecording: true });
@@ -45,7 +79,7 @@ class Record extends Component {
   }
 
   stopRecording() {
-    this.setState({ isRecording: false, timeRemaining: this.sampleLength * 1000 });
+    this.setState({ isSession: false, isRecording: false, timeRemaining: this.sampleLength * 1000 });
     clearInterval(this.countDownIntervalId);
   }
 
@@ -60,6 +94,26 @@ class Record extends Component {
     }
   }
 
+  goToUploadScreen() {
+    const path = '/thankyou'
+    browserHistory.push(path)
+  }
+
+  startNextSession() {
+    this.addAttempt(this.state.sessionBuffers[0]);
+    this.setState({isSession: true});
+    if (this.props.attempts.length >= this.props.numberOfAttempts - 1) {
+      this.goToUploadScreen();
+    }
+  }
+
+  redoSession() {
+    this.setState({
+      sessionBuffers: [],
+      isSession: true
+    });  
+  }
+
   componentDidMount() {
     recordingService.init();
   }
@@ -72,9 +126,21 @@ class Record extends Component {
         </Link>
         <div className="sqwak-labs-countdown"> {this.props.attempts.length} / {this.props.numberOfAttempts} </div>
         <img src={this.state.isRecording ? recordButtonActiveImg : recordButtonImg} className="sqwak-labs-round-button" role="presentation" onClick={this.startRecording.bind(this)}/>
-        <div className="sqwak-labs-recording-timer">
-          {this.getTime().seconds}:{this.getTime().milliseconds}
-        </div>
+        {(() => {
+          if (!this.state.isSession) {
+            return (
+              <div className="sqwak-labs-buttom-bar sqwak-labs-button-group">
+                <div className="sqwak-labs-square-button sqwak-labs-text-sm" onClick={this.redoSession.bind(this)} >Redo</div>
+                <div className="sqwak-labs-square-button sqwak-labs-text-sm" onClick={this.startNextSession.bind(this)} >Next</div>
+              </div>)
+          } else {
+            return (
+              <div className="sqwak-labs-recording-timer">
+                {this.getTime().seconds}:{this.getTime().milliseconds}
+              </div>
+            )
+          }
+        })()}
       </div>
     );
   }
@@ -83,7 +149,9 @@ class Record extends Component {
 function mapStateToProps(state) {
   return {
     numberOfAttempts: state.testSubject.numberOfAttempts,
-    attempts: state.testSubject.attempts
+    attempts: state.testSubject.attempts,
+    label: state.testSubject.label,
+    gender: state.testSubject.gender
   }
 }
 

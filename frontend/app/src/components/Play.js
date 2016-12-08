@@ -53,7 +53,9 @@ class Play extends Component {
           </audio>
           <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
           <img src={this.state.playButtonImage} className="sqwak-labs-round-button" role="presentation" onClick={this.toggleSoundPlaying.bind(this)}/>
-          <div onClick={this.startRecording.bind(this)} className="sqwak-labs-square-button">Try it</div>
+          <div className="sqwak-labs-buttom-bar sqwak-labs-button-group">
+            <div onClick={this.startRecording.bind(this)} className="sqwak-labs-square-button">Try it</div>
+          </div>
         </div>
     );
   }

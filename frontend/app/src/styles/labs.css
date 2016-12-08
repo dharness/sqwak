@@ -38,27 +38,40 @@ html, body {
   background: red;
 }
 
+.sqwak-labs-buttom-bar {
+  width: 100%;
+  position: fixed;
+  height: 100px;
+  bottom: 0px;
+}
+
 .sqwak-labs-square-button {
-  width: 80%;
   margin: auto;
   border-radius: 10px;
   border: 2px solid #3F4F67;
   background: #42CDF9;
-  position: fixed;
-  bottom: 20px;
-  left: calc(50% - (80%/2));
   color: white;
   font-family: Bungee-Regular;
   font-size: 45px;
   text-align: center;
   transition: transform 5ms linear;
   display: block;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 20px 10px 20px;
+  margin-bottom: 20px;
 }
 
 .sqwak-labs-square-button:active {
   transform: scale(0.95);
   background: #00A8DD;
+}
+
+.sqwak-labs-button-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.sqwak-labs-text-sm {
+  font-size: 32px;
 }
 
 #attempt-count {
@@ -140,4 +153,11 @@ html, body {
   margin-top: 35px;
   font-family: Bungee-Regular;
   font-size: 36px;
+}
+
+.sqwak-labs-thankyou-tube {
+  display: block;
+  margin: auto;
+  margin-top: 27px;
+  width: 22%;
 }

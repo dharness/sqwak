@@ -17,6 +17,7 @@ router.post('/', function(req, res, next) {
   const data = req.body ? req.body.data : {}
   const sampleLength = 3.5;
   const frequency = 44100;
+  
   data.amplitudes = padAmplitudes(data.amplitudes, { frequency, sampleLength });
 
   Joi.validate(data, soundSchema, (err, sound) => {

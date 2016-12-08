@@ -60,7 +60,9 @@ class Intake extends Component {
             </div>
           </div>
         </div>
-        <div onClick={this.goToPlayScreen.bind(this)} className="sqwak-labs-square-button">start</div>
+        <div className="sqwak-labs-buttom-bar sqwak-labs-button-group">
+          <div onClick={this.goToPlayScreen.bind(this)} className="sqwak-labs-square-button">start</div>
+        </div>
       </div>
     );
   }

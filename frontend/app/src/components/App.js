@@ -4,6 +4,7 @@ import './../styles/App.css';
 import Play from './Play'
 import Record from './Record'
 import Intake from './Intake'
+import Thankyou from './Thankyou'
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <Route path="/" component={Intake} />
         <Route path="/play" component={Play} />
         <Route path="/record" component={Record} />
+        <Route path="/thankyou" component={Thankyou} />
       </Router>
     );
   }
