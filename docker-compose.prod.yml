@@ -12,7 +12,6 @@ services:
 
   frontend:
     image: sqwak/frontend
-    image: sqwak/frontend
     ports:
       - "8082:3000"
     command: npm start
@@ -30,6 +29,9 @@ services:
     image: sqwak/nginx
     links:
       - node:api
+      - frontend:frontend
+    volumes:
+      - /usr/src/app/nginx_error.log:/etc/nginx/error.log
     ports:
       - "80:80"
       - "443:443"
