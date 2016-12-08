@@ -7,3 +7,4 @@ sqwaks
 **/*.DS_Store
 venv
 node_modules
+ssl
