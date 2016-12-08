@@ -1,0 +1,11 @@
+version: '2'
+services:
+  node:
+    volumes:
+      - ./web/app:/usr/src/app
+      - /usr/src/app/node_modules
+
+  frontend:
+    volumes:
+      - ./frontend/app:/usr/src/app
+      - /usr/src/app/node_modules

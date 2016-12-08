@@ -1,7 +1,6 @@
 version: '2'
 services:
   node:
-    build: ./web
     image: sqwak/api
     ports:
       - "8080:8080"
@@ -12,7 +11,7 @@ services:
     command: npm start
 
   frontend:
-    build: ./frontend
+    image: sqwak/frontend
     image: sqwak/frontend
     ports:
       - "8082:3000"
@@ -26,3 +25,11 @@ services:
     image: mongo:3
     ports:
       - "27017:27017"
+
+  nginx:
+    image: sqwak/nginx
+    links:
+      - node:api
+    ports:
+      - "80:80"
+      - "443:443"
