@@ -33,6 +33,7 @@ services:
   
   nginx:
     build: ./nginx
+    image: sqwak/nginx
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     links:
