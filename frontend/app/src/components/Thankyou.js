@@ -8,8 +8,9 @@ class Thankyou extends Component {
 
   goToIntake() {
     const path = '/'
-    browserHistory.push(path)
-  }
+    //browserHistory.push(path)
+    window.location = '/'
+}
 
   render() {
     return (
