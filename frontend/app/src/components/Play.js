@@ -4,7 +4,7 @@ import playButtonImg from './../assets/images/play-button.svg';
 import pauseButtonImg from './../assets/images/pause-button.svg';
 import originalShmaw  from './../assets/audio/original-shmaw.wav';
 import './../styles/App.css';
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 
 class Play extends Component {
 
@@ -51,10 +51,18 @@ class Play extends Component {
           <audio controls ref={(e)=> {this.audioPlayer = e}} style={{display: 'none'}}>
             <source src={originalShmaw}/>
           </audio>
-          <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
-          <img src={this.state.playButtonImage} className="sqwak-labs-round-button" role="presentation" onClick={this.toggleSoundPlaying.bind(this)}/>
-          <div className="sqwak-labs-buttom-bar sqwak-labs-button-group">
-            <div onClick={this.startRecording.bind(this)} className="sqwak-labs-square-button">Try it</div>
+          <div className="sqwak-labs-top-row">
+            <Link to={'/'}>
+              <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
+            </Link>
+          </div>
+          <div className="sqwak-labs-middle-row">
+            <img src={this.state.playButtonImage} className="sqwak-labs-round-button" role="presentation" onClick={this.toggleSoundPlaying.bind(this)}/>
+          </div>
+          <div className="sqwak-labs-bottom-row">
+            <div className="sqwak-labs-button-group">
+              <div onClick={this.startRecording.bind(this)} className="sqwak-labs-square-button">Try it</div>
+            </div>
           </div>
         </div>
     );
