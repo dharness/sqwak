@@ -1,9 +1,13 @@
+@font-face {
+  font-family: Bungee-Regular;
+  src: url(../assets/fonts/Bungee-Regular.ttf);
+}
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .sqwak-labs-logo {
@@ -40,9 +44,9 @@ html, body {
 
 .sqwak-labs-buttom-bar {
   width: 100%;
-  position: fixed;
   height: 100px;
   bottom: 0px;
+  margin-top: 30px;
 }
 
 .sqwak-labs-square-button {
@@ -76,15 +80,16 @@ html, body {
 
 #attempt-count {
   font-size: 150px;
+  font-family: Bungee-Regular;
+
 }
 
 .sqwak-labs-recording-timer {
   width: 100%;
-  position: fixed;
-  bottom: 20px;
   text-align: center;
   font-size: 64px;
   color: #42CDF8;
+  margin-top: 30px;
   font-family: Bungee-Regular;
 }
 
