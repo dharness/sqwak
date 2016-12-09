@@ -61,7 +61,7 @@ class Record extends Component {
 
      console.log(payload);
 
-     return fetch(`http://${process.env.REACT_APP_API_URL}/sounds`, {
+     return fetch(`https://${process.env.REACT_APP_API_URL}/api/sounds`, {
        method: 'post',
        headers: { 'Content-Type': 'application/json' },
        body: JSON.stringify(payload)
