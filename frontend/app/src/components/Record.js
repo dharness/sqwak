@@ -35,36 +35,11 @@ class Record extends Component {
   }
 
   addAttempt(amplitudes) {
-    this.uploadAmplitudes(amplitudes)
-        .then((response) => {
-          if (response.status === 200) {
-            this.props.dispatch({
-              type: 'ADD_ATTEMPT',
-              attempt: amplitudes
-            });
-          } else {
-            alert("An error has occurred");
-            console.warn(response);
-          }
-        });
-  }
-
-   uploadAmplitudes(amplitudes) {
-     amplitudes = Array.prototype.slice.call(amplitudes);
-     var payload = {
-       data: {
-         amplitudes,
-         label: this.props.label,
-         gender: this.props.gender
-       }
-     };
-
-     return fetch(`//${process.env.REACT_APP_API_URL}/api/sounds`, {
-       method: 'post',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify(payload)
-     })
-    .catch(error => console.error('Request failed', error));
+    amplitudes = Array.prototype.slice.call(amplitudes);
+    this.props.dispatch({
+      type: 'ADD_ATTEMPT',
+      attempt: amplitudes
+    });
   }
 
 
