@@ -15,7 +15,8 @@ class Thankyou extends Component {
   }
 
   uploadAmplitudes() {
-    this.props.attempts.forEach(attempt => {
+    this.props.attempts.forEach((attempt, index) => {
+      console.log(index);
       var payload = {
         data: {
           amplitudes: attempt,
@@ -45,6 +46,9 @@ class Thankyou extends Component {
     });
   }
 
+  componentDidMount() {
+    this.uploadAmplitudes();
+  }
 
   render() {
     return (
@@ -65,15 +69,6 @@ class Thankyou extends Component {
               return <img src={testTubeImg} className="sqwak-labs-thankyou-tube" role="presentation"/> 
             }
           })()}
-        </div>
-        <div className="sqwak-labs-bottom-row">
-          <div className="sqwak-labs-buttom-bar sqwak-labs-button-group">
-            <div 
-              onClick={this.state.isUploading ? this.uploadAmplitudes.bind(this) : () => {window.location = '/'}} 
-              className="sqwak-labs-square-button">
-              {this.state.isUploading ? "Upload" : "Replay"}
-            </div>
-          </div>
         </div>
       </div>
     )

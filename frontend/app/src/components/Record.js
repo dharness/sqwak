@@ -90,7 +90,9 @@ class Record extends Component {
   componentDidMount() {
     recordingService.init();
   }
+
   render() {
+
     return (
       <div>
         <div className="sqwak-labs-top-row">
@@ -126,32 +128,7 @@ class Record extends Component {
       </div>
     )
   }
-  render2() {
-    return (
-      <div>
-        <Link to={'/'}>
-          <img src={sqwakLabsLogo} className="sqwak-labs-logo" role="presentation"/>
-        </Link>
-        <div className="sqwak-labs-countdown"> {this.props.attempts.length} / {this.props.numberOfAttempts} </div>
-        <img src={this.state.isRecording ? recordButtonActiveImg : recordButtonImg} className="sqwak-labs-round-button" role="presentation" onClick={this.startRecording.bind(this)}/>
-        {(() => {
-          if (!this.state.isSession) {
-            return (
-              <div className="sqwak-labs-buttom-bar sqwak-labs-button-group">
-                <div className="sqwak-labs-square-button sqwak-labs-text-sm" onClick={this.redoSession.bind(this)} >Redo</div>
-                <div className="sqwak-labs-square-button sqwak-labs-text-sm" onClick={this.startNextSession.bind(this)} >Next</div>
-              </div>)
-          } else {
-            return (
-              <div className="sqwak-labs-recording-timer">
-                {this.getTime().seconds}:{this.getTime().milliseconds}
-              </div>
-            )
-          }
-        })()}
-      </div>
-    );
-  }
+
 }
 
 function mapStateToProps(state) {
