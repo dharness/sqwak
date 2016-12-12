@@ -9,3 +9,4 @@ venv
 node_modules
 ssl
 nginx/www/static
+db

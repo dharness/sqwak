@@ -5,20 +5,25 @@ from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
 import time
 import random
+
 # from process_audio import get_buffered_amplitudes
 
 
 def main():
-    
+
     client = MongoClient()
     db = client.sqwaks
 
-    data = [ d["amplitudes"] for d in db.sounds.find({"label": "TEST_DATA"}) ]
+    data = [
+        d["amplitudes"] for d in db.sounds.find({
+            "label": "shmiggity-shmaw"
+        })
+    ]
     random.shuffle(data)
 
     percent_test = 70.
     sqwak = DataSets(data, percent_test)
-    sample_length = 3.5 * 44100;
+    sample_length = 3.5 * 44100
     accuracy = train(sqwak, sample_length)
     print(accuracy)
 
@@ -41,8 +46,9 @@ def main():
     # mnist_accuracy = train(mnist, mnist_sample_length)
     # print(mnist_accuracy)
 
+
 if (__name__ == "__main__"):
     start = time.time()
     main()
     end = time.time()
-    print('time elapsed (s): ', end-start)
+    print('time elapsed (s): ', end - start)
