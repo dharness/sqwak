@@ -13,9 +13,7 @@ def main():
     db = client.sqwaks
 
     data = [
-        d["amplitudes"] for d in db.sounds.find({
-            "label": "shmiggity-shmaw"
-        })
+        d["amplitudes"] for d in db.sounds.find({"label": "shmiggity-shmaw"})
     ]
     random.shuffle(data)
 
