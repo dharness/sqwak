@@ -1,53 +1,41 @@
-import tensorflow as tf
 import numpy as np
 import os
+from pymongo import MongoClient
+import tensorflow as tf
 
 
-# x_data = np.random.rand(100).astype(np.float32)
-# y_data = x_data * 10 + 2
+db = MongoClient()
+results = db.sqwaks.sounds.find()
+N = len(results[0]["amplitudes"])
+x_data = []
 
-# W = tf.Variable(tf.zeros([1]))
-# b = tf.Variable(tf.zeros([1]))
-# y = W * x_data + b
+for sample in results:
+    x_data.append(sample["amplitudes"])
 
+x_data = np.array(x_data)
+print(x_data.shape)
 
-# # Minimize the mean squared errors.
-# loss = tf.reduce_mean(tf.square(y - y_data))
-# optimizer = tf.train.GradientDescentOptimizer(0.1)
-# train = optimizer.minimize(loss)
+y_data = x_data * 10 + 2
 
-# # Before starting, initialize the variables.  We will 'run' this first.
-# init = tf.global_variables_initializer()
-
-# tf.histogram_summary("W", W)
-# # Launch the graph.
-# sess = tf.Session()
-# sess.run(init)
-
-# Fit the line.
-# for step in range(500):
-#     # sess.run(train)
-#     print(step, sess.run(W), sess.run(b))
+W = tf.Variable(tf.zeros([N]))
+b = tf.Variable(tf.zeros([1]))
+y = W * x_data + b
 
 
-x = tf.Variable(0) 
+# Minimize the mean squared errors.
+loss = tf.reduce_mean(tf.square(y - y_data))
+optimizer = tf.train.GradientDescentOptimizer(0.1)
+train = optimizer.minimize(loss)
 
-y = tf.square(x)
-summary_op = tf.summary.scalar("nool_hist", y)
-
-sess = tf.Session()
+# Before starting, initialize the variables.  We will 'run' this first.
 init = tf.global_variables_initializer()
+
+# Launch the graph.
+sess = tf.Session()
 sess.run(init)
 
-path = os.path.dirname(os.path.abspath(__file__)) + '/logs'
-train_writer = tf.train.SummaryWriter(path, sess.graph)
-merged = tf.summary.merge_all()
-
-for step in range(5):
-    assign_op = x.assign(step)
-    sess.run(assign_op)
-    output, summary = sess.run([y, merged])
-    print(step, output)
-    train_writer.add_summary(summary, step)
-    #train_writer.add_summary(sess.run(summary_op), output)
-
+# Fit the line.
+for step in range(201):
+    sess.run(train)
+    if step % 20 == 0:
+        print(step, sess.run(W), sess.run(b))

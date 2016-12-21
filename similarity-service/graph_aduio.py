@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 # plt.plot(amps[0])
 # plt.show()
 
-db = MongoClient()
+db = MongoClient("sqwak.kingofthestack.com")
 
-result = db.sqwaks.sounds.find()
+result = db.sqwaks.sounds.find({"rating": 0})
 db_amps = result[0]["amplitudes"]
 plt.figure(2)
 plt.plot(db_amps)
