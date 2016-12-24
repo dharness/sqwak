@@ -5,9 +5,7 @@ from math import floor
 Represents an individual dataset which keeps track of its data in batches
 """
 class DataSet():
-    def __init__(self, x_data):
-        y_data = [ np.array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0], dtype="float32") for x in x_data ]
-        x_data = np.array(x_data)
+    def __init__(self, x_data, y_data):
         self._samples = np.array(x_data)
         self._labels = np.array(y_data)
         self._next_batch_head = 0
