@@ -1,54 +1,51 @@
-from model import train
-from DataSets import DataSets
+from sklearn import linear_model
 from pymongo import MongoClient
-from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
-import time
+import matplotlib.pyplot as plt
 import random
+import warnings
+import sys
+from utils import calculate_accuracy
 
-# from process_audio import get_buffered_amplitudes
+# Supress a harmless scipy warning
+warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
 
+db = MongoClient()
+results = list(db.sqwaks.sounds.find())
+
+
+def train(training_data):
+    random.shuffle(training_data)
+
+    x_data = []
+    y_data = []
+    for i, sample in enumerate(training_data):
+        x_data.append(sample["amplitudes"])
+        y_data.append(sample["rating"])
+
+    reg = linear_model.LinearRegression()
+    reg.fit(x_data[:150], y_data[:150])
+
+    predicted = reg.predict(x_data[150:])
+    actual = y_data[150:]
+    return predicted, actual
 
 def main():
 
-    client = MongoClient()
-    db = client.sqwaks
+    predicted, actual = train(results)
 
-    data = [
-        d["amplitudes"] for d in db.sounds.find({
-            "label": "shmiggity-shmaw"
-        })
-    ]
-    random.shuffle(data)
+    plt.plot(predicted, color='r', label='Prediction')
+    plt.plot(actual, color='b', label='Actual')
+    plt.xlabel('Sample #')
+    plt.ylabel('Rating')
+    plt.title('Linear Regression 1')
+    plt.legend()
 
-    percent_test = 70.
-    sqwak = DataSets(data, percent_test)
-    sample_length = 3.5 * 44100
-    accuracy = train(sqwak, sample_length)
-    print(accuracy)
+    plt.show()
 
-    # mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
-    # make the mnist data a bit more general
-    # mnist.test.samples = mnist.test.images
-    # percent_test = 70.
-    # sqwak = DataSets(data, percent_test)
-    # old_sqwak = DataSets(old_data, percent_test)
-
-    # old_sqwak_sample_length = 180224
-    # old_sqwak_accuracy = train(old_sqwak, old_sqwak_sample_length)
-    # print(old_sqwak_accuracy)
-
-    # sqwak_sample_length = 540672
-    # sqwak_accuracy = train(sqwak, sqwak_sample_length)
-    # print(sqwak_accuracy)
-
-    # mnist_sample_length = 784
-    # mnist_accuracy = train(mnist, mnist_sample_length)
-    # print(mnist_accuracy)
-
-
-if (__name__ == "__main__"):
-    start = time.time()
-    main()
-    end = time.time()
-    print('time elapsed (s): ', end - start)
+def get_accuracy(num_iterations = 10):
+    accuracy = 0
+    for i in range(num_iterations):
+        predicted, actual = train(results)
+        accuracy += calculate_accuracy(predicted, actual)
+    print accuracy/num_iterations
