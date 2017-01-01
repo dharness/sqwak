@@ -1,0 +1,35 @@
+version: '2'
+services:
+  node:
+    image: sqwak/api
+    ports:
+      - "8080:8080"
+    links:
+      - mongo:db
+    environment:
+      - HOST_IP=138.197.134.40
+    command: npm start
+
+  frontend:
+    image: sqwak/frontend
+    ports:
+      - "8082:3000"
+    command: npm start
+    links:
+      - node:api 
+    environment:
+      - REACT_APP_API_URL=localhost:8080
+
+  mongo:
+    image: mongo:3
+    ports:
+      - "27017:27017"
+
+  nginx:
+    image: sqwak/nginx
+    links:
+      - node:api
+      - frontend:frontend
+    ports:
+      - "80:80"
+      - "443:443"

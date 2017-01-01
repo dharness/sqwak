@@ -1,0 +1,182 @@
+@font-face {
+  font-family: Bungee-Regular;
+  src: url(../assets/fonts/Bungee-Regular.ttf);
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+/** LAYOUT **/
+
+.sqwak-labs-top-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 23%;
+}
+
+.sqwak-labs-middle-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 65%;
+}
+
+.sqwak-labs-bottom-row {
+  width: 100%;
+  display: flex;
+  height: 12%;
+}
+
+.sqwak-labs-logo {
+  width: 100%;
+  height: 100%;
+}
+
+.sqwak-labs-round-button {
+  height: 60%;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  transition: transform 50ms ease-out;
+}
+
+.sqwak-labs-round-button img {
+  width: 50%;
+  height: 50%;
+  align-self: center;
+  padding-left: 20px;
+}
+
+.sqwak-labs-round-button .record-dot {
+  width: 40%;
+  height: 40%;
+  padding-left: 0px;
+}
+
+.sqwak-labs-round-button.recording {
+  background: red;
+}
+
+.sqwak-labs-square-button {
+  border-radius: 10px;
+  border: 2px solid #3F4F67;
+  background: #42CDF9;
+  color: white;
+  font-family: Bungee-Regular;
+  font-size: 30px;
+  text-align: center;
+  transition: transform 5ms linear;
+  display: inline-table;
+  padding: 10px;
+}
+
+.sqwak-labs-square-button:active {
+  transform: scale(0.95);
+  background: #00A8DD;
+}
+
+.sqwak-labs-button-group {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.sqwak-labs-text-sm {
+  font-size: 32px;
+}
+
+#attempt-count {
+  font-size: 150px;
+  font-family: Bungee-Regular;
+
+}
+
+.sqwak-labs-recording-timer {
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+  color: #42CDF8;
+  font-family: Bungee-Regular;
+}
+
+.sqwak-labs-intake-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sqwak-labs-intake-form-row {
+  height: 80px;
+  width: 80%;
+  margin: auto;
+  color: #3F4F66;
+}
+
+.sqwak-labs-intake-userid {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: center;
+  width: 100%;
+  border-bottom: 1px solid black;
+  border-color: #3F4F66;
+  padding-bottom: 5px;
+  margin: auto;
+}
+
+.sqwak-labs-intake-radio {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.sqwak-labs-radio-button-group {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sqwak-labs-radio-button {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  align-self: center;
+  line-height: 30px;
+}
+
+.sqwak-labs-radio-button.active {
+  background: #DCF0FD;
+}
+
+.sqwak-intake-label-dropdown {
+  margin-top: 20px;
+}
+
+.sqwak-labs-countdown {
+  color: #D4F0FD;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-align: center;
+  margin-top: 35px;
+  font-family: Bungee-Regular;
+  font-size: 36px;
+}
+
+.sqwak-labs-thankyou-tube {
+  display: block;
+  margin: auto;
+  margin-top: 27px;
+  width: 22%;
+}

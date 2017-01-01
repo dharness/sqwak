@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  include ./components/logo
+
+  .sl-intro
+    p 
+      |Sqwak is a friendly neural net that is learning to 
+      |tell sounds apart.
+    p
+      b Mission: 
+      |Help teach Sqwak which sounds are similar, and 
+      |which ones aren’t.
+    p
+      b Instructions: 
+      |Listen to the original sound. Then 
+      |listen to attempts to copy the sound. Rate the attempt 
+      b(style='color:#FF5D55;') high if it sounds similar, low if it does not.
+    p
+      b Rule of thumb: 
+      |If you can tell they were trying to make 
+      |the original sound, 
+      b(style='color:#42CCF8;') give them a rating of at least five.
+
+  .sl-button-wrapper
+    .sl-button(onclick="window.location='/original-sqwak'")
+      | I read it
