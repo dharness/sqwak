@@ -35,4 +35,4 @@ theme: jekyll-theme-merlot
 collections:
   experiments:
     output: true
-    # permalink: /sqwak/:path/
+    permalink: /sqwak/:title
