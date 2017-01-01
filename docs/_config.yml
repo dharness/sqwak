@@ -17,8 +17,8 @@ title: Sqwak Experiments
 email: hello@kingofthestack.com
 description: > # this means to ignore newlines until "baseurl:"
   Audio fingerprinting of human voice sounds with deep neural nets
-baseurl: "/sqwak" # the subpath of your site, e.g. /blog
-url: "https://dharness.github.io" 
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://dharness.github.io/sqwak/" 
 twitter_username: jekyllrb
 github_username:  jekyll
 
@@ -35,3 +35,4 @@ theme: jekyll-theme-merlot
 collections:
   experiments:
     output: true
+    permalink: /sqwak/:path/
