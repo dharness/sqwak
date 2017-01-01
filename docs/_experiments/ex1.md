@@ -1,25 +1,34 @@
 ---
-layout: post
-title:  "Welcome to Jekyll!"
-date:   2016-12-31 13:17:40 -0500
-categories: jekyll update
+layout: default
+title: "Experiment 1: Linear Regression"
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+# [](#header-1) Experiment 1
 
-Jekyll also offers powerful support for code snippets:
+## [](#header-2) Linear Regression
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+Basic linear regression to predict ratings using 316 samples. 221 training samples (~70%) and 95 testing samples.
+It was done using the mean squared error as the loss function. No pre-processing has been done on the data. Significant differences between actual and predicted ratings.
+Uses database 2016_12_31__17_48_00.gz
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+Over 10 unique trials with data appearing in random orders, the average accuracy was **9.84%**
 
-[jekyll-docs]: http://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+```python
+def train(training_data):
+    random.shuffle(training_data)
+
+    x_data = []
+    y_data = []
+    for i, sample in enumerate(training_data):
+        x_data.append(sample["amplitudes"])
+        y_data.append(sample["rating"])
+
+    reg = linear_model.LinearRegression()
+    reg.fit(x_data[:150], y_data[:150])
+
+    predicted = reg.predict(x_data[150:])
+    actual = y_data[150:]
+    return predicted, actual
+```
+
+{% include image.html src="assets/ex_1_fig_1.png" caption="Experiment 1: Predicted vs. Actual" %}

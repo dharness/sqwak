@@ -30,3 +30,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
 theme: jekyll-theme-merlot
+
+collections:
+  experiments:
+    output: true

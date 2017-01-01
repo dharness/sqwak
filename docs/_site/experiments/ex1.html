@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=f9e741c9130162966a7774764d75de1246b15804" media="screen">
+    <link rel="stylesheet" href="/assets/css/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="/assets/css/non-screen.css" media="handheld, only screen and (max-device-width:640px)">
+
+    <script type="text/javascript" src="/assets/js/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Sqwak Experiments by dharness</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="http://github.com/dharness/sqwak">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Sqwak Experiments</h1>
+            <h2>Audio fingerprinting of human voice sounds with deep neural nets
+</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      
+        <div id="no-downloads">
+          <span class="inner">
+          </span>
+        </div>
+      
+
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1 id="header-1-experiment-1"><a href="#header-1"></a> Experiment 1</h1>
+
+<h2 id="header-2-linear-regression"><a href="#header-2"></a> Linear Regression</h2>
+
+<p>Basic linear regression to predict ratings using 316 samples. 221 training samples (~70%) and 95 testing samples.
+It was done using the mean squared error as the loss function. No pre-processing has been done on the data. Significant differences between actual and predicted ratings.
+Uses database 2016_12_20__17_15_28.gz</p>
+
+<p>Over 10 unique trials with data appearing in random orders, the average accuracy was <strong>9.84%</strong></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">training_data</span><span class="p">):</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">training_data</span><span class="p">)</span>
+
+    <span class="n">x_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">training_data</span><span class="p">):</span>
+        <span class="n">x_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s">"amplitudes"</span><span class="p">])</span>
+        <span class="n">y_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s">"rating"</span><span class="p">])</span>
+
+    <span class="n">reg</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_data</span><span class="p">[:</span><span class="mi">150</span><span class="p">],</span> <span class="n">y_data</span><span class="p">[:</span><span class="mi">150</span><span class="p">])</span>
+
+    <span class="n">predicted</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_data</span><span class="p">[</span><span class="mi">150</span><span class="p">:])</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">150</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">predicted</span><span class="p">,</span> <span class="n">actual</span>
+</code></pre>
+</div>
+
+<p><a href="http://localhost:4000/assets/ex_1_fig_1.png" target="_blank" class="graph_image">
+    <img src="http://localhost:4000/assets/ex_1_fig_1.png" />
+</a></p>
+<caption>Experiment 1: Predicted vs. Actual</caption>
+
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            
+              <p>this project by <a href="http://github.com/dharness">dharness</a> can be found on <a href="http://github.com/dharness/sqwak">GitHub</a></p>
+            
+            
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
