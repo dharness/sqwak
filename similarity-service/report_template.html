@@ -39,14 +39,6 @@ that accepts these same parameters.
     <body>
         {{ plot_div|indent(8) }}
         {{ plot_script|indent(8) }}
-        <button onclick="nWin()">New Window</button>
-        <script>
-          function nWin() {
-            var w = window.open();
-            var html = $("#report-container").html();
-
-              $(w.document.body).html(html);
-          }
         </script>
     </body>
 </html>
