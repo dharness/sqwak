@@ -9,8 +9,6 @@ from bokeh.resources import CDN
 from bokeh.embed import file_html
 import random
 import warnings
-import sys
-import os
 import utils
 from bunch import Bunch
 from math import floor
@@ -48,16 +46,12 @@ def train(training_data):
 
 def plot():
     trained_data = train(results)
-    utils.plot(trained_data, title='Ordinary Least Squares Linear Regression')
+    utils.plot(trained_data, title='Ordinary Least Squares Linear Regression', will_show=True)
 
 
 def report():
-    YAML_headers = '---\nlayout: default\ntitle: "Experiment 2: FFT"\n---'
-    path = os.path.realpath(__file__ + '../../../../../docs/_experiments/')
-    report = open(path + "/report.md", "w")
-    html = plot2(False)
-    report.write(YAML_headers + html)
-    report.close()
+    trained_data = train(results)
+    utils.generate_report(trained_data, title='Ordinary Least Squares Linear Regression')
 
 def get_accuracy(num_iterations = 10):
     accuracy = 0
