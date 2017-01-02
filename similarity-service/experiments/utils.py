@@ -66,23 +66,24 @@ def plot(trained_data, title):
     })
 
 
-def generate_report(trained_data, original_data, experiment_id, train, title="", description=""):
+def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg=""):
     chart_html = plot(trained_data, title=title)
-    YAML_headers = ('---\nlayout: default\ntitle: "{0}"\n---\n\n').format(title)
     path = os.path.realpath(__file__ + '../../../../docs/_experiments/')
     num_iterations=1
 
-    fullscreen_button = '<a href="{{site.url}}{{ site.baseurl }}/experiments/' + experiment_id + '_lg.html"> Full Screen </a>'
+    fullscreen_path = '{{site.url}}{{ site.baseurl }}/experiments/' + experiment_id + '_lg.html'
     metrics = get_metrics(trained_data, original_data, train, num_iterations=num_iterations)
-    train_code = "\n\n\n```python\n {0} \n```".format(''.join(inspect.getsourcelines(train)[0]))
+    train_code = ''.join(inspect.getsourcelines(train)[0])
 
     # Create the standard report
     report = open(path + "/" + experiment_id + ".md", "w")
     contents = Bunch({
-        "YAML_headers": YAML_headers,
+        "layout": "default",
+        "processing_method": processing_method,
+        "learning_alg": learning_alg,
         "description": description,
         "chart_html": chart_html.sm,
-        "fullscreen_button": fullscreen_button,
+        "fullscreen_path": fullscreen_path,
         "metrics": metrics,
         "train_code": train_code,
         "title": title,

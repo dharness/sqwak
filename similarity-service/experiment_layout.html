@@ -1,4 +1,9 @@
-{{ YAML_headers }}
+---
+layout: {{layout}}
+title: {{title}}
+processing_method: {{processing_method}}
+learning_alg: {{learning_alg}}
+---
 
 # [](#header-2) {{title}}
 
@@ -7,7 +12,7 @@
 ### [](#header-3) Visualization
 
 {{chart_html}}
-{{fullscreen_button}}
+<a href="{{fullscreen_path}}" target="_blank">View Larger</a>
 
 ### [](#header-3) Metrics
 
@@ -17,4 +22,6 @@ _Accuracy is calculated over {{num_iterations}} unique trials with data appearin
 
 ### [](#header-3) Code
 
+```python
 {{train_code}}
+```

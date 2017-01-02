@@ -44,5 +44,7 @@ def report():
         title='Ordinary Least Squares Linear Regression',
         experiment_id="1",
         description=__doc__,
-        train=train
+        train=train,
+        processing_method="None",
+        learning_alg="Ordinary Least Squares"
     )
