@@ -1,12 +1,18 @@
+from bokeh.plotting import figure, show, output_file
+import bokeh.layouts
+import bokeh.models
+import bokeh.models.widgets
 from sklearn import linear_model
 from pymongo import MongoClient
 import numpy as np
-import matplotlib.pyplot as plt
+from bokeh.resources import CDN
+from bokeh.embed import file_html
 import random
 import warnings
 import sys
+import os
+import utils
 from bunch import Bunch
-from utils import calculate_accuracy
 from math import floor
 
 # Supress a harmless scipy warning
@@ -15,7 +21,6 @@ warnings.filterwarnings(action="ignore", module="scipy", message="^internal gels
 db = MongoClient()
 results = list(db.sqwaks.sounds.find())
 training_data_cutoff = int(floor(len(results)*.7))
-
 
 def train(training_data):
     random.shuffle(training_data)
@@ -43,17 +48,16 @@ def train(training_data):
 
 def plot():
     trained_data = train(results)
-    predicted = trained_data.predicted
-    actual = trained_data.actual
+    utils.plot(trained_data, title='Ordinary Least Squares Linear Regression')
 
-    plt.plot(predicted, color='r', label='Prediction')
-    plt.plot(actual, color='b', label='Actual')
-    plt.xlabel('Sample #')
-    plt.ylabel('Rating')
-    plt.title('Linear Regression 1')
-    plt.legend()
 
-    plt.show()
+def report():
+    YAML_headers = '---\nlayout: default\ntitle: "Experiment 2: FFT"\n---'
+    path = os.path.realpath(__file__ + '../../../../../docs/_experiments/')
+    report = open(path + "/report.md", "w")
+    html = plot2(False)
+    report.write(YAML_headers + html)
+    report.close()
 
 def get_accuracy(num_iterations = 10):
     accuracy = 0
