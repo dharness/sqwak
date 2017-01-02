@@ -125,9 +125,9 @@ def get_metrics(trained_data, original_data, train, num_iterations):
     variance = reg.score(x_data_test, y_data_test)
     accuracy = get_accuracy(original_data, train, num_iterations)
     
-    headers = ["Mean Squared Error", "Variance", "Accuracy"]
-    table = [[("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy)]]
-    return "\n\n\n" + tabulate(table, headers, tablefmt="pipe")
+    headers = ["Mean Squared Error", "Variance", "Accuracy (%)"]
+    table = [[mean_sqr_err, variance, accuracy]]
+    return "\n\n\n" + tabulate(table, headers, tablefmt="pipe", stralign="left", numalign="left", floatfmt=".2f")
 
 def get_accuracy(original_data, train, num_iterations=10):
     accuracy = 0
