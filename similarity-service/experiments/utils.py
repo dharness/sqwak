@@ -38,8 +38,6 @@ def plot(trained_data, title):
     predicted_ratings = trained_data.predicted
     actual_ratings = trained_data.actual
 
-    # output to static HTML file
-    output_file("log_lines.html")
     TOOLS_SM = "pan,save,box_select"
     TOOLS_LG = "pan,wheel_zoom,box_zoom,reset,save,box_select"
     plot_sm = figure(title=title, tools=TOOLS_SM, plot_width=500, plot_height=300, responsive=True, toolbar_location="above")
@@ -55,6 +53,8 @@ def plot(trained_data, title):
     plot_lg.square(x, predicted_ratings, legend="Predicted", color="red", alpha=0.5)
     plot_sm.circle(x, actual_ratings, legend="Actual", color="blue", alpha=0.3)
     plot_lg.circle(x, actual_ratings, legend="Actual", color="blue", alpha=0.3)
+    
+    plot_sm.legend.location = "bottom_right"
 
     template = get_report_template()
     html_sm = bokeh.embed.file_html(plot_sm, bokeh.resources.CDN, title, template=template)
@@ -66,25 +66,41 @@ def plot(trained_data, title):
     })
 
 
-def generate_report(trained_data, original_data, train, title="", description=""):
+def generate_report(trained_data, original_data, experiment_id, train, title="", description=""):
     chart_html = plot(trained_data, title=title)
     YAML_headers = ('---\nlayout: default\ntitle: "{0}"\n---\n\n').format(title)
     path = os.path.realpath(__file__ + '../../../../docs/_experiments/')
+    num_iterations=1
 
-    fullscreen_button = """<a href="{{site.url}}{{ site.baseurl }}/experiments/report_lg.html"> Full Screen </a>"""
-    description = ("<p>{0}</p>").format(description)
-    metrics = get_metrics(trained_data, original_data, train)
+    fullscreen_button = '<a href="{{site.url}}{{ site.baseurl }}/experiments/' + experiment_id + '_lg.html"> Full Screen </a>'
+    metrics = get_metrics(trained_data, original_data, train, num_iterations=num_iterations)
     train_code = "\n\n\n```python\n {0} \n```".format(''.join(inspect.getsourcelines(train)[0]))
 
     # Create the standard report
-    report = open(path + "/report.md", "w")
-    report.write(YAML_headers + description + metrics + train_code + chart_html.sm + fullscreen_button)
+    report = open(path + "/" + experiment_id + ".md", "w")
+    contents = Bunch({
+        "YAML_headers": YAML_headers,
+        "description": description,
+        "chart_html": chart_html.sm,
+        "fullscreen_button": fullscreen_button,
+        "metrics": metrics,
+        "train_code": train_code,
+        "title": title,
+        "num_iterations": num_iterations
+    })
+
+    report.write(format_report_contents(contents))
     report.close()
     # Create a seperate page for the fullscreen report
-    YAML_headers = ('---\nlayout: fullscreen_graph\ntitle: "{0}"\n---').format(title + " __lg")
-    fullscreen_graph = open(path + "/report_lg.md", "w")
+    YAML_headers = ('---\nlayout: fullscreen_graph\n---')
+    fullscreen_graph = open(path + "/" + experiment_id + "_lg.md", "w")
     fullscreen_graph.write(YAML_headers + chart_html.lg)
     fullscreen_graph.close()
+
+def format_report_contents(contents):
+    with open('experiment_layout.html', 'r') as f:
+        template = Template(f.read())
+    return template.render(**contents)
 
 def get_report_template():
     with open('report_template.html', 'r') as f:
@@ -96,7 +112,7 @@ def load_data():
     results = list(db.sqwaks.sounds.find())
     return results
 
-def get_metrics(trained_data, original_data, train):
+def get_metrics(trained_data, original_data, train, num_iterations):
     predicted = trained_data.predicted
     actual = trained_data.actual
     reg = trained_data.reg
@@ -106,7 +122,7 @@ def get_metrics(trained_data, original_data, train):
 
     mean_sqr_err = np.mean((predicted - actual) ** 2)
     variance = reg.score(x_data_test, y_data_test)
-    accuracy = get_accuracy(original_data, train, num_iterations=1)
+    accuracy = get_accuracy(original_data, train, num_iterations)
     
     headers = ["Mean Squared Error", "Variance", "Accuracy"]
     table = [[("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy)]]

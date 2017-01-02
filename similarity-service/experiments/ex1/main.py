@@ -46,6 +46,7 @@ def report():
         trained_data,
         original_data=results,
         title='Ordinary Least Squares Linear Regression',
+        experiment_id="1",
         description=__doc__,
         train=train
     )
