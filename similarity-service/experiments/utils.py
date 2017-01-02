@@ -39,9 +39,10 @@ def plot(trained_data, title, will_show):
 
     # output to static HTML file
     output_file("log_lines.html")
-    TOOLS = "pan,wheel_zoom,box_zoom,reset,save,box_select"
-    plot_sm = figure(title=title, tools=TOOLS, plot_width=500, plot_height=300, responsive=True)
-    plot_lg = figure(title=title, tools=TOOLS, plot_width=1020, plot_height=700)
+    TOOLS_SM = "pan,save,box_select"
+    TOOLS_LG = "pan,wheel_zoom,box_zoom,reset,save,box_select"
+    plot_sm = figure(title=title, tools=TOOLS_SM, plot_width=500, plot_height=300, responsive=True, toolbar_location="above")
+    plot_lg = figure(title=title, tools=TOOLS_LG, plot_width=1020, plot_height=700)
 
     x = []
     for (i, rating) in enumerate(predicted_ratings):
