@@ -11,9 +11,3 @@ layout: default
 {% endif %}
 {% endfor %}
 </ul>
-
-| item | qty |
-|:-------|------:|
-| spam | 42 |
-| eggs | 451 |
-| bacon | 0 |
