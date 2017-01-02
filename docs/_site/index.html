@@ -27,7 +27,7 @@
       <header>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
-            <h1>Sqwak Experiments</h1>
+            <h1 style="cursor: pointer" onclick="window.location.href='http://localhost:4000/sqwak/'">Sqwak Experiments</h1>
             <h2>Audio fingerprinting of human voice sounds with deep neural nets
 </h2>
           </span>
@@ -49,7 +49,178 @@
 
 
       <section id="main_content">
-        <ul>
+        <h1 id="#header-1" style="display: none"></h1>
+<style>
+    .experiment-matrix__cell {
+        background: rgba(211, 84, 69, 0.5);
+    }
+    .experiment-matrix__cell--complete {
+        background: rgba(114, 201, 56, 0.5)
+    }
+    .experiment-matrix__cell--complete:hover {
+        cursor: pointer;
+        background: rgb(114, 201, 56);
+    }
+    .experiment-matrix__cell:hover {
+        background: rgb(211, 84, 69);
+    }
+</style>
+
+<h2 id="header-2regression"><a href="#header-2"></a>Regression</h2>
+
+<table>
+    <tr>
+        <th colspan="1"></th>
+        <th colspan="4">Pre-processing</th>
+    </tr>
+    <tr>
+        <th>Learning Algorithm</th>
+        
+            <td>None</td>
+        
+            <td>FFT</td>
+        
+            <td>MFC</td>
+        
+            <td>Equalized</td>
+        
+    </tr>
+    
+        <tr>
+            <td>Ordinary Least Squares</td>
+            
+                
+                
+                        
+                    <td class="experiment-matrix__cell--complete" onclick="window.location.href='/sqwak/experiments/1.html'">
+                    </td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+        </tr>
+    
+        <tr>
+            <td>Ridge Regression</td>
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+        </tr>
+    
+        <tr>
+            <td>Lasso</td>
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+        </tr>
+    
+        <tr>
+            <td>Stochastic Gradient Descent</td>
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+        </tr>
+    
+        <tr>
+            <td>Bayesian Regression</td>
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+                
+                
+                    <td class="experiment-matrix__cell"></td>
+                
+            
+        </tr>
+    
+
+</table>
+
+<h3 id="header-3"><a href="#header-3"></a></h3>
+
+<h4 id="header-4-experiment-lists"><a href="#header-4"></a> Experiment Lists</h4>
+
+<ul>
 
 
     <li>
@@ -66,6 +237,8 @@
 
 
 </ul>
+
+<h2 id="header-2classification"><a href="#header-2"></a>Classification</h2>
 
       </section>
 
