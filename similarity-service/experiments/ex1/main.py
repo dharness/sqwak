@@ -1,10 +1,6 @@
 """
     This is the basic linear regression. It was done with 7qts of pride
 """
-from bokeh.plotting import figure, show, output_file
-import bokeh.layouts
-import bokeh.models
-import bokeh.models.widgets
 from sklearn import linear_model
 import numpy as np
 import random

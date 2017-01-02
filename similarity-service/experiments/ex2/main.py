@@ -1,14 +1,14 @@
-import random
-import warnings
-import sys
-import scipy.fftpack
-import numpy as np
-import matplotlib.pyplot as plt
+"""
+    This is the basic linear regression. It was done with 7qts of pride
+"""
 from sklearn import linear_model
-from pymongo import MongoClient
-from bunch import Bunch
+import numpy as np
+import random
 import utils
+import inspect
+from bunch import Bunch
 from math import floor
+
 
 # Supress a harmless scipy warning
 warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
