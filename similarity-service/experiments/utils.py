@@ -15,13 +15,6 @@ from pymongo import MongoClient
 from tabulate import tabulate
 
 
-def mfc(x_data, sample_rate):
-    mfcc_data = []
-    for amplitudes in x_data:
-        mfcc_feat = mfcc(amplitudes, sample_rate)
-        mfcc_data.append(mfcc_feat[0])
-    return mfcc_data
-
 def calculate_accuracy(actual_ratings, predicted_ratings, threshold=0.1):
     correct_predictions = 0
     for i, predicted in enumerate(predicted_ratings):
@@ -30,6 +23,10 @@ def calculate_accuracy(actual_ratings, predicted_ratings, threshold=0.1):
             correct_predictions += 1
     accuracy = 100. * (correct_predictions)/len(predicted_ratings)
     return accuracy 
+    
+def mfc(amplitudes, sample_rate):
+    mfcc_feat = mfcc(amplitudes, sample_rate)
+    return mfcc_feat[0]
 
 def compare(predicted, actual, threshold=0.2):
     if (predicted <= (actual + threshold) and predicted >= (actual - threshold)):
@@ -114,12 +111,6 @@ def get_metrics(trained_data, original_data, train):
     headers = ["Mean Squared Error", "Variance", "Accuracy"]
     table = [[("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy)]]
     return "\n\n\n" + tabulate(table, headers, tablefmt="pipe")
-
-#     return ("""
-# | Mean Squared Error| Variance | Accuracy |\n
-# |:------------------|:---------|:---------|\n
-# |{0}                | {1}      | {2}%     |\n
-#     """).format(("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy))
 
 def get_accuracy(original_data, train, num_iterations=10):
     accuracy = 0
