@@ -8,9 +8,11 @@ import bokeh.resources
 import numpy as np
 import sys
 import os
+import inspect
 from jinja2 import Template
 from bunch import Bunch
 from pymongo import MongoClient
+from tabulate import tabulate
 
 
 def mfc(x_data, sample_rate):
@@ -75,10 +77,11 @@ def generate_report(trained_data, original_data, train, title="", description=""
     fullscreen_button = """<a href="{{site.url}}{{ site.baseurl }}/experiments/report_lg.html"> Full Screen </a>"""
     description = ("<p>{0}</p>").format(description)
     metrics = get_metrics(trained_data, original_data, train)
+    train_code = "\n\n\n```python\n {0} \n```".format(''.join(inspect.getsourcelines(train)[0]))
 
     # Create the standard report
     report = open(path + "/report.md", "w")
-    report.write(YAML_headers + description + metrics + chart_html.sm + fullscreen_button)
+    report.write(YAML_headers + description + metrics + train_code + chart_html.sm + fullscreen_button)
     report.close()
     # Create a seperate page for the fullscreen report
     YAML_headers = ('---\nlayout: fullscreen_graph\ntitle: "{0}"\n---').format(title + " __lg")
@@ -106,9 +109,17 @@ def get_metrics(trained_data, original_data, train):
 
     mean_sqr_err = np.mean((predicted - actual) ** 2)
     variance = reg.score(x_data_test, y_data_test)
-    accuracy = get_accuracy(original_data, train)
+    accuracy = get_accuracy(original_data, train, num_iterations=1)
+    
+    headers = ["Mean Squared Error", "Variance", "Accuracy"]
+    table = [[("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy)]]
+    return "\n\n\n" + tabulate(table, headers, tablefmt="pipe")
 
-    return ("mean_sqr_err: {0}, variance: {1}, get_accuracy: {2}%").format(mean_sqr_err ,variance, accuracy)
+#     return ("""
+# | Mean Squared Error| Variance | Accuracy |\n
+# |:------------------|:---------|:---------|\n
+# |{0}                | {1}      | {2}%     |\n
+#     """).format(("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy))
 
 def get_accuracy(original_data, train, num_iterations=10):
     accuracy = 0

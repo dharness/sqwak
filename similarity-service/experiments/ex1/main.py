@@ -9,8 +9,10 @@ from sklearn import linear_model
 import numpy as np
 import random
 import utils
+import inspect
 from bunch import Bunch
 from math import floor
+
 
 def train(training_data):
     training_data_cutoff = int(floor(len(training_data) * .7))
