@@ -1,5 +1,14 @@
 """
-    This is the basic linear regression. It was done with 7qts of pride
+**Interesting Observations:**
+
+* This model is pretty terrible at rating sqwaks. Just look at that dismal accuracy score.
+
+* Note the position of the purple dots (where the prediction matches the actual rating). It seems to be good at knowing when a sqwak should receive a rating of 0!
+
+* This model seems to predict a rating that is consistently lower than the actual rating.
+
+Stay tuned to see if we improve in [experiement 2!](2.html)
+
 """
 from sklearn import linear_model
 import numpy as np
@@ -11,6 +20,7 @@ from math import floor
 
 
 def train(training_data):
+    # 70% of sqwaks for training, 30% for testing
     training_data_cutoff = int(floor(len(training_data) * .7))
     random.shuffle(training_data)
 
@@ -23,8 +33,9 @@ def train(training_data):
     reg = linear_model.LinearRegression()
     reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
 
-
+    # predict on the remaining 30%
     predicted = reg.predict(x_data[training_data_cutoff:])
+
     actual = y_data[training_data_cutoff:]
     
     return Bunch({
@@ -48,3 +59,6 @@ def report():
         processing_method="None",
         learning_alg="Ordinary Least Squares"
     )
+
+def describe():
+    print __doc__
