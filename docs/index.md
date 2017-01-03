@@ -14,6 +14,7 @@ learning_algs:
 completed_experiments:
     - "Ordinary Least Squares|None"
     - "Ordinary Least Squares|FFT"
+    - "Ordinary Least Squares|MFC"
     - "Stochastic Gradient Descent|None"
     - "Stochastic Gradient Descent|FFT"
 ---

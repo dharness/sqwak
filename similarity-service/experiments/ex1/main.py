@@ -1,11 +1,9 @@
 """
-**Interesting Observations:**
+**Notes:**
 
-* This model is pretty terrible at rating sqwaks. Just look at that dismal accuracy score.
-
-* Note the position of the purple dots (where the prediction matches the actual rating). It seems to be good at knowing when a sqwak should receive a rating of 0!
-
-* This model seems to predict a rating that is consistently lower than the actual rating.
+This model is pretty terrible at rating sqwaks. Just look at that dismal accuracy score.
+Also, note the position of the purple dots (where the prediction matches the actual rating). It seems to be good at knowing when a sqwak should receive a rating of 0!
+This model seems to predict a rating that is consistently lower than the actual rating.
 
 Stay tuned to see if we improve in [experiement 2!](2.html)
 
@@ -57,8 +55,6 @@ def report():
         description=__doc__,
         train=train,
         processing_method="None",
-        learning_alg="Ordinary Least Squares"
+        learning_alg="Ordinary Least Squares",
+        num_iterations=10
     )
-
-def describe():
-    print __doc__

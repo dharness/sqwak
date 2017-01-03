@@ -1,8 +1,11 @@
 """
-Linear Regression of FFT samples
+**Notes:**
 
+Here we preprocessed the amplitudes with the fast fourier transform.
 The FFT produces complex numbers. We tested using the real only, imaginary only, phase, and magnitudes
-of the FFT. The magnitude proved to consistently have the highest accuracy, so that is what is used here.
+of the FFT. The magnitude proved to consistently have the highest accuracy, so that is what is displayed here.
+
+The FFT improved the accuracy quite a bit! Let's see how we do with the mel-frequency cepstrum in [experiment 3.](3.html)
 """
 from sklearn import linear_model
 import numpy as np
@@ -54,7 +57,7 @@ def report():
     utils.generate_report(
         trained_data,
         original_data=results,
-        title='Ordinary Least Squares Linear Regression, of FFT',
+        title='Ordinary Least Squares Linear Regression of FFT',
         experiment_id="2",
         description=__doc__,
         train=train,
