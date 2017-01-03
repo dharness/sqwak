@@ -7,7 +7,8 @@ learning_alg: {{learning_alg}}
 
 # [](#header-2) {{title}}
 
-<p>{{description}}</p>
+
+{{description}}
 
 ### [](#header-3) Visualization
 
@@ -18,7 +19,7 @@ learning_alg: {{learning_alg}}
 
 {{metrics}}
 
-_Accuracy is calculated over {{num_iterations}} unique trials with data appearing in random orders. A pair is said to be a match if the predicted rating is within a +/- 0.2 margin of error_
+_Accuracy is calculated by the number of correct predictions over the total number of predictions. The average accuracy over {{num_iterations}} unique trials is used in the chart. A prediction is correct when it is within a +/- 0.2 margin of error of the actual rating._
 
 ### [](#header-3) Code
 
