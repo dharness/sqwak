@@ -1,11 +1,5 @@
 """
-**Notes:**
-
-Preprocessing with the mel-frequency cepstrum has produced the best accuracy score yet!!
-The MFC produces a short-term power spectrum of a sound, and uses the FFT to do so.
-
-There's still lots of room for improvement. Let's try to switch up the learning algorithm in [experiement 4.](4.html)
-
+Bayesian Regression MFC
 """
 from sklearn import linear_model
 import numpy as np
@@ -31,7 +25,7 @@ def train(training_data):
         x_data.append(mfc_data)
         y_data.append(sample["rating"])
 
-    reg = linear_model.LinearRegression()
+    reg = linear_model.BayesianRidge()
     reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
     
     # predict on the remaining 30%
@@ -53,11 +47,11 @@ def report():
     utils.generate_report(
         trained_data,
         original_data=results,
-        title='Ordinary Least Squares Linear Regression of MFC',
-        experiment_id="3",
+        title='Bayesian Regression MFC',
+        experiment_id="12",
         description=__doc__,
         train=train,
         processing_method="MFC",
-        learning_alg="Ordinary Least Squares",
+        learning_alg="Bayesian Regression",
         num_iterations=10
     )

@@ -4,7 +4,6 @@ processing_methods:
     - None
     - FFT
     - MFC
-    - Equalized
 learning_algs:
     - Ordinary Least Squares
     - Ridge Regression
@@ -19,6 +18,7 @@ completed_experiments:
     - "Stochastic Gradient Descent|FFT"
     - "Bayesian Regression|None"
     - "Bayesian Regression|FFT"
+    - "Bayesian Regression|MFC"
     - "Lasso|None"
     - "Lasso|FFT"
     - "Ridge Regression|None"
