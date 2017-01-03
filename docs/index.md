@@ -13,6 +13,7 @@ learning_algs:
     - Bayesian Regression
 completed_experiments:
     - "Ordinary Least Squares|None"
+    - "Ordinary Least Squares|FFT"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
