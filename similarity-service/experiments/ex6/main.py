@@ -1,14 +1,5 @@
 """
-**Interesting Observations:**
-
-* This model is pretty terrible at rating sqwaks. Just look at that dismal accuracy score.
-
-* Note the position of the purple dots (where the prediction matches the actual rating). It seems to be good at knowing when a sqwak should receive a rating of 0!
-
-* This model seems to predict a rating that is consistently lower than the actual rating.
-
-Stay tuned to see if we improve in [experiement 2!](2.html)
-
+Bayesian regression
 """
 from sklearn import linear_model
 import numpy as np
@@ -30,7 +21,7 @@ def train(training_data):
         x_data.append(sample["amplitudes"])
         y_data.append(sample["rating"])
 
-    reg = linear_model.LinearRegression()
+    reg = linear_model.BayesianRidge()
     reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
 
     # predict on the remaining 30%
@@ -52,10 +43,11 @@ def report():
     utils.generate_report(
         trained_data,
         original_data=results,
-        title='Ordinary Least Squares Linear Regression',
-        experiment_id="1",
+        title='Bayesian Regression',
+        experiment_id="6",
         description=__doc__,
         train=train,
         processing_method="None",
-        learning_alg="Ordinary Least Squares"
+        learning_alg="Bayesian Regression",
+        num_iterations=10
     )
