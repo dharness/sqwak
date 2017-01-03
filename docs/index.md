@@ -9,11 +9,12 @@ learning_algs:
     - Ordinary Least Squares
     - Ridge Regression
     - Lasso
-    - Stochastic Gradient Descent 
+    - Stochastic Gradient Descent
     - Bayesian Regression
 completed_experiments:
     - "Ordinary Least Squares|None"
     - "Ordinary Least Squares|FFT"
+    - "Stochastic Gradient Descent|None"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
@@ -53,9 +54,9 @@ completed_experiments:
                 {% assign ex_type = alg | append: "|" | append: method %}
                 {% if page.completed_experiments contains ex_type %}
                         {% for ex in site.experiments %}
-                        {% if ex.processing_method == method && ex.learning_alg == alg %}
-                            {% assign ex_link = site.baseurl | append: ex.url %}
-                        {% endif %}
+                            {% if ex.processing_method == method and ex.learning_alg == alg %}
+                                {% assign ex_link = site.baseurl | append: ex.url %}
+                            {% endif %}
                         {% endfor %}
                     <td class="experiment-matrix__cell--complete" onclick="window.location.href='{{ex_link}}'">
                     </td>
