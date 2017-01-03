@@ -1,22 +1,23 @@
+"""
+**Notes:**
+
+Preprocessing with the mel-frequency cepstrum has produced the best accuracy score yet!!
+The MFC produces a short-term power spectrum of a sound, and uses the FFT to do so.
+
+There's still lots of room for improvement. Let's try to switch up the learning algorithm in [experiement 4.](4.html)
+
+"""
 from sklearn import linear_model
-from pymongo import MongoClient
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-import warnings
-import sys
-from utils import calculate_accuracy
-from utils import mfc
+import utils
+from bunch import Bunch
+from math import floor
 
-# Supress a harmless scipy warning
-warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
-
-db = MongoClient()
-results = list(db.sqwaks.sounds.find())
-print(len(results))
-
-# BayesianRidge with mfc
 def train(training_data):
+    # 70% of sqwaks for training, 30% for testing
+    training_data_cutoff = int(floor(len(training_data) * .7))
     random.shuffle(training_data)
 
     x_data = []
@@ -25,33 +26,38 @@ def train(training_data):
     sample_rate = 44100
 
     for i, sample in enumerate(training_data):
-        mfc_data = mfc(np.asarray(sample["amplitudes"]), sample_rate)
+        # Preprocessing with mel-frequency cepstrum
+        mfc_data = utils.mfc(np.asarray(sample["amplitudes"]), sample_rate)
         x_data.append(mfc_data)
         y_data.append(sample["rating"])
 
-    reg = linear_model.BayesianRidge()
-    reg.fit(x_data[:150], y_data[:150])
+    reg = linear_model.LinearRegression()
+    reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
+    
+    # predict on the remaining 30%
+    predicted = reg.predict(x_data[training_data_cutoff:])
+    
+    actual = y_data[training_data_cutoff:]
+   
+    return Bunch({
+        "predicted": predicted, 
+        "actual": actual,
+        "x_data_test": x_data[training_data_cutoff:],
+        "y_data_test": y_data[training_data_cutoff:],
+        "reg": reg
+    })
 
-    predicted = reg.predict(x_data[150:])
-    actual = y_data[150:]
-    return predicted, actual
-
-def main():
-
-    predicted, actual = train(results)
-
-    plt.plot(predicted, color='r', label='Prediction')
-    plt.plot(actual, color='b', label='Actual')
-    plt.xlabel('Sample #')
-    plt.ylabel('Rating')
-    plt.title('Linear Regression 1')
-    plt.legend()
-
-    plt.show()
-
-def get_accuracy(num_iterations = 10):
-    accuracy = 0
-    for i in range(num_iterations):
-        predicted, actual = train(results)
-        accuracy += calculate_accuracy(predicted, actual)
-    print accuracy/num_iterations
+def report():
+    results = utils.load_data()
+    trained_data = train(results)
+    utils.generate_report(
+        trained_data,
+        original_data=results,
+        title='Ordinary Least Squares Linear Regression of MFC',
+        experiment_id="3",
+        description=__doc__,
+        train=train,
+        processing_method="None",
+        learning_alg="Ordinary Least Squares",
+        num_iterations=10
+    )

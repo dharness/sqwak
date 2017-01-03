@@ -14,6 +14,7 @@ learning_algs:
 completed_experiments:
     - "Ordinary Least Squares|None"
     - "Ordinary Least Squares|FFT"
+    - "Ordinary Least Squares|MFC"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
