@@ -1,5 +1,5 @@
 """
-Bayesian regression with FFT
+Lasso Regression
 """
 from sklearn import linear_model
 import numpy as np
@@ -18,19 +18,10 @@ def train(training_data):
     x_data = []
     y_data = []
     for i, sample in enumerate(training_data):
-        n = len(sample["amplitudes"])
-        X = np.fft.fft(sample["amplitudes"])/n
-
-        #  the magnitude sqrt(re^2 + im^2) tells you the amplitude of the component at the corresponding frequency. 
-        fft_amps = X[range(n/2)]
-        im = np.imag(fft_amps)
-        re = np.real(fft_amps)
-        X = np.sqrt((im ** 2) + (re ** 2))
-
-        x_data.append(X)
+        x_data.append(sample["amplitudes"])
         y_data.append(sample["rating"])
 
-    reg = linear_model.BayesianRidge()
+    reg = linear_model.Lasso(alpha = 0.001)
     reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
 
     # predict on the remaining 30%
@@ -52,11 +43,11 @@ def report():
     utils.generate_report(
         trained_data,
         original_data=results,
-        title='Bayesian Regression',
-        experiment_id="7",
+        title='Lasso Regression',
+        experiment_id="8",
         description=__doc__,
         train=train,
-        processing_method="FFT",
-        learning_alg="Bayesian Regression",
+        processing_method="None",
+        learning_alg="Lasso",
         num_iterations=10
     )

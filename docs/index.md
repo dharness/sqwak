@@ -19,6 +19,7 @@ completed_experiments:
     - "Stochastic Gradient Descent|FFT"
     - "Bayesian Regression|None"
     - "Bayesian Regression|FFT"
+    - "Lasso|None"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
