@@ -22,6 +22,7 @@ completed_experiments:
     - "Lasso|None"
     - "Lasso|FFT"
     - "Ridge Regression|None"
+    - "Ridge Regression|FFT"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
