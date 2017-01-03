@@ -16,6 +16,7 @@ completed_experiments:
     - "Ordinary Least Squares|FFT"
     - "Ordinary Least Squares|MFC"
     - "Stochastic Gradient Descent|None"
+    - "Stochastic Gradient Descent|FFT"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
