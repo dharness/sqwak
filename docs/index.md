@@ -20,6 +20,7 @@ completed_experiments:
     - "Bayesian Regression|None"
     - "Bayesian Regression|FFT"
     - "Lasso|None"
+    - "Lasso|FFT"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
