@@ -1,39 +1,31 @@
 """
-**Notes:**
-
-This model is pretty terrible at rating sqwaks. Just look at that dismal accuracy score.
-Also, note the position of the purple dots (where the prediction matches the actual rating). It seems to be good at knowing when a sqwak should receive a rating of 0!
-This model seems to predict a rating that is consistently lower than the actual rating.
-
-Stay tuned to see if we improve in [experiement 2!](2.html)
-
+Stochastic Gradient Descent
 """
 from sklearn import linear_model
 import numpy as np
 import random
 import utils
-import inspect
 from bunch import Bunch
-from math import floor
+from math import floor, sqrt, atan2
+import pdb
 
 
 def train(training_data):
-    # 70% of sqwaks for training, 30% for testing
     training_data_cutoff = int(floor(len(training_data) * .7))
     random.shuffle(training_data)
 
     x_data = []
     y_data = []
+
     for i, sample in enumerate(training_data):
         x_data.append(sample["amplitudes"])
         y_data.append(sample["rating"])
-
-    reg = linear_model.LinearRegression()
+    
+    reg = linear_model.SGDRegressor()
     reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
 
-    # predict on the remaining 30%
-    predicted = reg.predict(x_data[training_data_cutoff:])
 
+    predicted = reg.predict(x_data[training_data_cutoff:])
     actual = y_data[training_data_cutoff:]
     
     return Bunch({
@@ -50,11 +42,11 @@ def report():
     utils.generate_report(
         trained_data,
         original_data=results,
-        title='Ordinary Least Squares Linear Regression',
-        experiment_id="1",
+        title='Stochastic Gradient Descent',
+        experiment_id="4",
         description=__doc__,
         train=train,
         processing_method="None",
-        learning_alg="Ordinary Least Squares",
+        learning_alg="Stochastic Gradient Descent",
         num_iterations=10
     )
