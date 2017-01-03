@@ -21,6 +21,7 @@ completed_experiments:
     - "Bayesian Regression|FFT"
     - "Lasso|None"
     - "Lasso|FFT"
+    - "Ridge Regression|None"
 ---
 
 <h1 id="#header-1" style="display: none"></h1>
@@ -75,6 +76,8 @@ completed_experiments:
     {% endfor %}
 
 </table>
+
+_click a cell to view_
 
 ### [](#header-3)
 
