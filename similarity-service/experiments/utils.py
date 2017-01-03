@@ -46,8 +46,8 @@ def plot(trained_data, title):
     x = []
     for (i, rating) in enumerate(predicted_ratings):
         x.append(i)
-        plot_sm.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=(i), y_end=(actual_ratings[i])))
-        plot_lg.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=(i), y_end=(actual_ratings[i])))
+        plot_sm.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=i, y_end=(actual_ratings[i])))
+        plot_lg.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=i, y_end=(actual_ratings[i])))
 
     plot_sm.square(x, predicted_ratings, legend="Predicted", color="red", alpha=0.5)
     plot_lg.square(x, predicted_ratings, legend="Predicted", color="red", alpha=0.5)
@@ -66,10 +66,10 @@ def plot(trained_data, title):
     })
 
 
-def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg=""):
+def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg="", num_iterations=1):
     chart_html = plot(trained_data, title=title)
     path = os.path.realpath(__file__ + '../../../../docs/_experiments/')
-    num_iterations=1
+
 
     fullscreen_path = '{{site.url}}{{ site.baseurl }}/experiments/' + experiment_id + '_lg.html'
     metrics = get_metrics(trained_data, original_data, train, num_iterations=num_iterations)
