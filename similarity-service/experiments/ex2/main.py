@@ -1,35 +1,38 @@
 """
-    This is the basic linear regression. It was done with 7qts of pride
+Linear Regression of FFT samples
+
+The FFT produces complex numbers. We tested using the real only, imaginary only, phase, and magnitudes
+of the FFT. The magnitude proved to consistently have the highest accuracy, so that is what is used here.
 """
 from sklearn import linear_model
 import numpy as np
 import random
 import utils
-import inspect
 from bunch import Bunch
-from math import floor
-
-
-# Supress a harmless scipy warning
-warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
-
-db = MongoClient()
-results = list(db.sqwaks.sounds.find())
-training_data_cutoff = int(floor(len(results) * .7))
+from math import floor, sqrt, atan2
+import pdb
 
 
 def train(training_data):
+    training_data_cutoff = int(floor(len(training_data) * .7))
     random.shuffle(training_data)
 
     x_data = []
     y_data = []
+
     for i, sample in enumerate(training_data):
         n = len(sample["amplitudes"])
         X = np.fft.fft(sample["amplitudes"])/n
-        X = X[range(n/2)]
+
+        #  the magnitude sqrt(re^2 + im^2) tells you the amplitude of the component at the corresponding frequency. 
+        fft_amps = X[range(n/2)]
+        im = np.imag(fft_amps)
+        re = np.real(fft_amps)
+        X = np.sqrt((im ** 2) + (re ** 2))
+
         x_data.append(X)
         y_data.append(sample["rating"])
-
+    
     reg = linear_model.LinearRegression()
     reg.fit(x_data[:training_data_cutoff], y_data[:training_data_cutoff])
 
@@ -45,45 +48,17 @@ def train(training_data):
         "reg": reg
     })
 
-def plot():
+def report():
+    results = utils.load_data()
     trained_data = train(results)
-    utils.plot(trained_data)
-
-
-def get_accuracy(num_iterations = 10):
-    accuracy = 0
-    for i in range(num_iterations):
-        trained_data = train(results)
-        predicted = trained_data.predicted
-        actual = trained_data.actual
-
-        accuracy += utils.calculate_accuracy(predicted, actual)
-    print accuracy/num_iterations
-
-def mean_sqr_err():
-    trained_data = train(results)
-    predicted = trained_data.predicted
-    actual = trained_data.actual
-    reg = trained_data.reg
-    
-    x_data_test = trained_data.x_data_test
-    y_data_test = trained_data.y_data_test
-    
-    print("Mean s quared error: %.2f"
-      % np.mean((predicted - actual) ** 2))
-    # Explained variance score: 1 is perfect prediction
-    print('Variance score: %.2f' % reg.score(x_data_test, y_data_test))
-
-def plot_fft():
-    x_data = results[100]["amplitudes"]
-    n = len(x_data)
-    Y = np.fft.fft(x_data)/n
-    Y = Y[range(n/2)]
-
-    plt.plot(Y, color='r', label='Prediction')
-    plt.xlabel('time')
-    plt.ylabel('FFT')
-    plt.title('FFT of a sqwak')
-    plt.legend()
-
-    plt.show()
+    utils.generate_report(
+        trained_data,
+        original_data=results,
+        title='Ordinary Least Squares Linear Regression, of FFT',
+        experiment_id="2",
+        description=__doc__,
+        train=train,
+        processing_method="FFT",
+        learning_alg="Ordinary Least Squares",
+        num_iterations=10
+    )

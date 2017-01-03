@@ -46,8 +46,8 @@ def plot(trained_data, title):
     x = []
     for (i, rating) in enumerate(predicted_ratings):
         x.append(i)
-        plot_sm.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=(i), y_end=(actual_ratings[i])))
-        plot_lg.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=(i), y_end=(actual_ratings[i])))
+        plot_sm.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=i, y_end=(actual_ratings[i])))
+        plot_lg.add_layout(bokeh.models.Arrow(end=None, line_color="orange", x_start=i, y_start=rating, x_end=i, y_end=(actual_ratings[i])))
 
     plot_sm.square(x, predicted_ratings, legend="Predicted", color="red", alpha=0.5)
     plot_lg.square(x, predicted_ratings, legend="Predicted", color="red", alpha=0.5)
@@ -66,10 +66,10 @@ def plot(trained_data, title):
     })
 
 
-def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg=""):
+def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg="", num_iterations=1):
     chart_html = plot(trained_data, title=title)
     path = os.path.realpath(__file__ + '../../../../docs/_experiments/')
-    num_iterations=1
+
 
     fullscreen_path = '{{site.url}}{{ site.baseurl }}/experiments/' + experiment_id + '_lg.html'
     metrics = get_metrics(trained_data, original_data, train, num_iterations=num_iterations)
@@ -125,9 +125,9 @@ def get_metrics(trained_data, original_data, train, num_iterations):
     variance = reg.score(x_data_test, y_data_test)
     accuracy = get_accuracy(original_data, train, num_iterations)
     
-    headers = ["Mean Squared Error", "Variance", "Accuracy"]
-    table = [[("%.2f" % mean_sqr_err), ("%.2f" % variance), ("%.2f" % accuracy)]]
-    return "\n\n\n" + tabulate(table, headers, tablefmt="pipe")
+    headers = ["Mean Squared Error", "Variance", "Accuracy (%)"]
+    table = [[mean_sqr_err, variance, accuracy]]
+    return "\n\n\n" + tabulate(table, headers, tablefmt="pipe", stralign="left", numalign="left", floatfmt=".2f")
 
 def get_accuracy(original_data, train, num_iterations=10):
     accuracy = 0
