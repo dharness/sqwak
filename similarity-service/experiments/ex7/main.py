@@ -1,5 +1,9 @@
 """
-Bayesian regression with FFT
+**Notes:**
+
+Yup, we were right it got better.
+
+[Bayesian with MFC](12.html)
 """
 from sklearn import linear_model
 import numpy as np

@@ -1,5 +1,9 @@
 """
-Ridge Regression
+**Notes:**
+It predicted a nearly straight line! This demonstrates a flaw with our data as it stands. Most of our ratings are
+between 0.6 and 1, so predicting something around 0.7 all the time would allow you to be mostly right. 
+We'll need more 'bad' sqwaks in the database with low ratings (0 to 0.5) to fix this. The predicted ratings are
+slightly pulled towards the actual ratings though. Would using [Lasso with FFT be different?](9.html)
 """
 from sklearn import linear_model
 import numpy as np

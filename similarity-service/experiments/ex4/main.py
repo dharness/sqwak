@@ -1,5 +1,8 @@
 """
-Stochastic Gradient Descent
+**Notes:**
+
+Wow, it's predictions are way off! Our ratings are from 0 to 1. This model is predicting ratings as high as 10.
+It's probably going to be only marginally better with FFT preprocessing in the [next experiment.](5.html)
 """
 from sklearn import linear_model
 import numpy as np

@@ -1,5 +1,9 @@
 """
-Ridge Regression
+**Notes:**
+
+Pretty bad accuracy. Similar to experiment 1.
+Let's try ridge with FFT in the next [experiment.](11.html)
+
 """
 from sklearn import linear_model
 import numpy as np

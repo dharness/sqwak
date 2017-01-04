@@ -1,5 +1,10 @@
 """
-Lasso Regression FFT
+**Notes:**
+
+Demonstrates the same problem as using [ridge wth fft](11.html). These predictions are on an even straighter line than with ridge.
+There seems to be no point in continuing with these methods till the database is filled with more sqwaks with low ratings.
+
+
 """
 from sklearn import linear_model
 import numpy as np

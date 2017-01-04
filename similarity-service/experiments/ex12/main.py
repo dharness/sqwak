@@ -1,5 +1,9 @@
 """
-Bayesian Regression MFC
+**Notes:**
+
+A little less accurate than [ordinary least squares with MFC](3.html) but hard to tell if this is statistically significant.
+
+Have a look at  [ridge regression](10.html) for some interesting developments.
 """
 from sklearn import linear_model
 import numpy as np

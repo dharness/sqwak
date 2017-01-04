@@ -6,10 +6,10 @@ processing_methods:
     - MFC
 learning_algs:
     - Ordinary Least Squares
-    - Ridge Regression
-    - Lasso
     - Stochastic Gradient Descent
     - Bayesian Regression
+    - Ridge Regression
+    - Lasso
 completed_experiments:
     - "Ordinary Least Squares|None"
     - "Ordinary Least Squares|FFT"
@@ -79,6 +79,8 @@ completed_experiments:
 </table>
 
 _click a cell to view_
+
+_click the top banner to come back home_
 
 ### [](#header-3)
 

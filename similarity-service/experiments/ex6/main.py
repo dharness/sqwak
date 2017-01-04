@@ -1,5 +1,10 @@
 """
-Bayesian regression
+**Notes:**
+
+Our prediction with Bayesian Ridge is that it'll follow the same trends as the simple linear regression with ordinary least squares.
+It'll get better with FFT and then even better with MFC.
+
+[Bayesian with fft.](7.html)
 """
 from sklearn import linear_model
 import numpy as np

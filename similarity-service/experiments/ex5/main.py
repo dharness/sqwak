@@ -1,5 +1,9 @@
 """
-Stochastic Gradient Descent of FFT
+**Notes:**
+
+Similar to Lasso. No point in continuing this one to MFC, at least till modifications are made to the data.
+Check out [Baysian Ridge instead!](6.html)
+
 """
 from sklearn import linear_model
 import numpy as np

@@ -1,5 +1,9 @@
 """
-Lasso Regression
+**Notes:**
+
+Interesting how Lasso with no preprocessing compares with ridge with no preprocessing.
+
+[Lasso with fft](9.html)
 """
 from sklearn import linear_model
 import numpy as np
