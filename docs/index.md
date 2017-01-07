@@ -5,11 +5,15 @@ processing_methods:
     - FFT
     - MFC
 learning_algs:
-    - Ordinary Least Squares
-    - Stochastic Gradient Descent
-    - Bayesian Regression
-    - Ridge Regression
-    - Lasso
+    regression:
+        - Ordinary Least Squares
+        - Stochastic Gradient Descent
+        - Bayesian Regression
+        - Ridge Regression
+        - Lasso
+    classification:
+        - Decision tree 
+        - SVM
 completed_experiments:
     - "Ordinary Least Squares|None"
     - "Ordinary Least Squares|FFT"
@@ -56,7 +60,7 @@ completed_experiments:
             <td>{{ method }}</td>
         {% endfor %}
     </tr>
-    {% for alg in page.learning_algs %}
+    {% for alg in page.learning_algs.regression %}
         <tr>
             <td>{{ alg }}</td>
             {% for method in page.processing_methods %}
@@ -84,8 +88,45 @@ _click the top banner to come back home_
 
 ### [](#header-3)
 
-#### [](#header-4) Experiment Lists
+## [](#header-2)Classification
 
+<table>
+    <tr>
+        <th colspan="1"></th>
+        <th colspan="{{4}}">Pre-processing</th>
+    </tr>
+    <tr>
+        <th>Learning Algorithm</th>
+        {% for method in page.processing_methods %}
+            <td>{{ method }}</td>
+        {% endfor %}
+    </tr>
+    {% for class_alg in page.learning_algs.classification %}
+        <tr>
+            <td>{{ class_alg }}</td>
+            {% for method in page.processing_methods %}
+                {% assign ex_type = class_alg | append: "|" | append: method %}
+                {% if page.completed_experiments contains ex_type %}
+                        {% for class_ex in site.experiments %}
+                            {% if class_ex.processing_method == method and class_ex.learning_algs == alg %}
+                                {% assign class_ex_link = site.baseurl | append: class_ex.url %}
+                            {% endif %}
+                        {% endfor %}
+                    <td class="experiment-matrix__cell--complete" onclick="window.location.href='{{class_ex_link}}'">
+                    </td>
+                {% else %}
+                    <td class="experiment-matrix__cell"></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+</table>
+
+### [](#header-3)
+_____________________________________________
+
+#### [](#header-4) All Experiments
 <ul>
 {% for ex in site.experiments %}
 {% if ex.layout != "fullscreen_graph" %}
@@ -95,6 +136,3 @@ _click the top banner to come back home_
 {% endif %}
 {% endfor %}
 </ul>
-
-
-## [](#header-2)Classification

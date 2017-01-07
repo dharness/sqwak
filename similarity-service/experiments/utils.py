@@ -40,8 +40,8 @@ def plot(trained_data, title):
 
     TOOLS_SM = "pan,save,box_select"
     TOOLS_LG = "pan,wheel_zoom,box_zoom,reset,save,box_select"
-    plot_sm = figure(title=title, tools=TOOLS_SM, plot_width=500, plot_height=300, responsive=True, toolbar_location="above")
-    plot_lg = figure(title=title, tools=TOOLS_LG, plot_width=1020, plot_height=700)
+    plot_sm = figure(title=title, tools=TOOLS_SM, plot_width=500, plot_height=300, responsive=True, toolbar_location="above", x_axis_label='test sqwaks', y_axis_label='ratings')
+    plot_lg = figure(title=title, tools=TOOLS_LG, plot_width=1020, plot_height=700, x_axis_label='test sqwaks', y_axis_label='ratings')
 
     x = []
     for (i, rating) in enumerate(predicted_ratings):
@@ -66,12 +66,12 @@ def plot(trained_data, title):
     })
 
 
-def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg="", num_iterations=1):
+def generate_report(trained_data, original_data, experiment_id, train, title="", description="", processing_method="", learning_alg="", num_iterations=1, experiment_type=""):
     chart_html = plot(trained_data, title=title)
-    path = os.path.realpath(__file__ + '../../../../docs/_experiments/')
+    path = os.path.realpath(__file__ + '../../../../docs/_experiments/' + experiment_type)
 
 
-    fullscreen_path = '{{site.url}}{{ site.baseurl }}/experiments/' + experiment_id + '_lg.html'
+    fullscreen_path = '{{site.url}}{{ site.baseurl }}/experiments/' + experiment_type + '/' + experiment_id + '_lg.html'
     metrics = get_metrics(trained_data, original_data, train, num_iterations=num_iterations)
     train_code = ''.join(inspect.getsourcelines(train)[0])
 
@@ -87,7 +87,8 @@ def generate_report(trained_data, original_data, experiment_id, train, title="",
         "metrics": metrics,
         "train_code": train_code,
         "title": title,
-        "num_iterations": num_iterations
+        "num_iterations": num_iterations,
+        "url": "experiments/" + experiment_type + "/" + experiment_id + ".html"
     })
 
     report.write(format_report_contents(contents))
