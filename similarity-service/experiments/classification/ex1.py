@@ -1,14 +1,16 @@
 from pymongo import MongoClient
 import pandas as pd
 import random
+import numpy as np
 from sklearn import tree
 from math import floor
 
 db = MongoClient()
 
 # fold_1_cursor = db.urban_sound.audio.find({"fold": 1}, {"amplitudes": 0}).skip(10).limit(10)
-class_3_cursor = db.urban_sound.audio.find({"classID": 3}).skip(10).limit(10)
-class_1_cursor = db.urban_sound.audio.find({"classID": 1}).skip(10).limit(10)
+num_samples = 30
+class_3_cursor = db.urban_sound.audio.find({"classID": 3}).skip(num_samples).limit(10)
+class_1_cursor = db.urban_sound.audio.find({"classID": 1}).skip(num_samples).limit(10)
 
 results = list(class_3_cursor) + list(class_1_cursor)
 random.shuffle(results)
@@ -32,13 +34,8 @@ clf = clf.fit(X_train, Y_train)
 
 predictions = clf.predict(X_test, Y_test)
 
-count = 0;
-for (i, p) in enumerate(predictions):
-    if Y_test[i] == p:
-        print "ok"
-        count += 1
-
-print count/float(n)
+count = (np.array(Y_test) == predictions).sum()
+print str((count/float(n)) * 100.) + "%"
 
 
 
