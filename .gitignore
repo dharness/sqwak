@@ -11,3 +11,4 @@ node_modules
 ssl
 nginx/www/static
 db
+similarity-service/experiments/classification/UrbanSound8K/**/*
