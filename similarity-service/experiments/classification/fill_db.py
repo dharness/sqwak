@@ -25,7 +25,6 @@ def main():
     # results = db.urban_sound.fold1.find({ 'fold': 1 })
     # urban_sound = pd.DataFrame(list(results))
 
-
 # print urban_sound.head(5)
 def load_from_csv(fold):
     dir = os.path.dirname(__file__)
